@@ -1,0 +1,34 @@
+
+ How does this violate the EULA? Well let's first begin on how this application
+ works:
+ 
+ This application replaces (at runtime - i.e. while the game is running) a
+ method the game uses with a self written one. So everytime the game tries to
+ use this method, the self written one is invoked instead. It can only achieve
+ this by changing the games memory. Once this redirection has been installed,
+ the application filters all the messages it receives (and they are a lot) to
+ only include the combat log. Such combat log messages are then processed 
+ further.
+ 
+ This application does not attempt to change any other memory in the game, 
+ except for this redirection it creates. It does not read passwords, private 
+ data, execute cheats, or installs a virus or backdoor.
+ 
+ Yet, the redirection violates the EULA. Here we go:
+ 
+ > 9. You will not attempt to interfere with, hack into, or decipher any 
+ > transmissions to or from the Game or any aspect of the Game.
+ 
+ Since "any apsect of the Game" is very vague, this application surely violated
+ this term because it "hacked" into the game to install the redirection. While
+ the technical solution surely is not "hacking" as many people know it, I am 
+ pretty sure you can interpret it that way.
+ 
+ > 10. You will not create, post, use or distribute any utilities, emulators or 
+ > other software, programs, information, materials or tools (such as macroing 
+ > programs, botting programs, UI modifications, server emulators, client hacks,
+ > map hacks, and data gathering utilities) without the express written 
+ > permission of Turbine.
+ 
+ Here we go: This application definitely falls under "data gathering utilities".
+ 
