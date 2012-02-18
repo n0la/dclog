@@ -81,11 +81,6 @@
     
  Q: How do I file a bug report?
  A: File one here: https://github.com/n0la/dclog/issues
- 
- Q: Who is the developer of this application?
- A: An Austrian called Florian Stinglmayr, aka Nola.
- 
- Q: How can I reach him?
- A: Per Email please: fstinglmayr@gmail.com
+
  
  
