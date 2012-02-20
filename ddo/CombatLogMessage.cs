@@ -32,6 +32,13 @@ namespace LibDDO.Combat
     TargetKilled,
   }
 
+  public enum CombatLogMessageState : int
+  {
+    Unknown = 0,
+    Parsed,
+    ParsingError
+  }
+
   public class CombatLogMessage
   {
     private string message = "";
@@ -40,6 +47,7 @@ namespace LibDDO.Combat
     private StringBuilder b = new StringBuilder();
     private CombatLogType type = CombatLogType.Unknown;
     private Damage damage = new Damage();
+    private CombatLogMessageState state = CombatLogMessageState.Unknown;
 
     public CombatLogMessage(string msg)
     {
@@ -47,6 +55,12 @@ namespace LibDDO.Combat
       // Remove the (Combat) or whatever is in front of it.
       message = message.Remove(0, message.IndexOf(' ')+1);
       timestamp = DateTime.Now;
+    }
+
+    public CombatLogMessageState State
+    {
+      get { return state; }
+      set { state = value; }
     }
 
     public CombatLogType Type
@@ -92,6 +106,19 @@ namespace LibDDO.Combat
     {
       if (b.Length == 0)
       {
+        if (state == CombatLogMessageState.Unknown)
+        {
+          b.Append("[??] ");
+        }
+        else if (state == CombatLogMessageState.ParsingError)
+        {
+          b.Append("[EE] ");
+        }
+        else if (state == CombatLogMessageState.Parsed)
+        {
+          b.Append("[OK] ");
+        }
+
         b.Append(timestamp.ToLongTimeString());
         b.Append("+");
         b.Append(timestamp.Millisecond);

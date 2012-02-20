@@ -18,16 +18,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
-namespace LibDDO.Combat.DPS
+namespace LibDDO.Combat.Tanking
 {
-  public interface IDPSMeter : ICombatLogListener
+  public interface ITankMeter : ICombatLogListener
   {
-    void Start();
-    void Stop();
-    double Result { get; }
-    TimeSpan TimePassed { get; }
   }
 }

@@ -39,10 +39,12 @@ namespace DDOHook
     }
 
     public void Run(RemoteHooking.IContext context, String channel)
-    {
-      int me = RemoteHooking.GetCurrentProcessId();
-
+    {    
       try {
+        // Avoid any point that may pass a .NET exception up to DDO itself.
+        // Such an exception will crash the game.
+        int me = RemoteHooking.GetCurrentProcessId();
+
         wcsncpyHook = LocalHook.Create(LocalHook.GetProcAddress("MSVCR80.DLL", "wcsncpy"),
                       new Dwcsncpy(wcsncpy_Hooked),
                       this
@@ -70,13 +72,27 @@ namespace DDOHook
             }
 
           }
-        }
+        }        
       }
       catch (Exception ex)
       {
-        iface.OnError(ex.Message);
+        try
+        {
+          iface.OnError(ex.ToString());
+        }
+        catch (Exception)
+        {
+        }
       }
-      iface.Exiting();
+
+      try
+      { // We are exiting. Either because we ran into an exception
+        // or because we have been signaled or terminated.
+        iface.Exiting();
+      }
+      catch (Exception)
+      {
+      }
     }
 
     public void Error(Exception e)

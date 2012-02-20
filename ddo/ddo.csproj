@@ -47,6 +47,7 @@
     <Reference Include="System.Runtime.Remoting" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CombatLogListener.cs" />
     <Compile Include="CombatLogMessage.cs" />
     <Compile Include="CombatLog.cs" />
     <Compile Include="Damage.cs" />
@@ -58,7 +59,12 @@
     <Compile Include="Helper.cs" />
     <Compile Include="LanguageParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SimpleTankMeter.cs" />
     <Compile Include="SingleTargetMeter.cs" />
+    <Compile Include="StringValue.cs" />
+    <Compile Include="TankMeter.cs" />
+    <Compile Include="TankMeterByMonster.cs" />
+    <Compile Include="TankMeterByType.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ddohook\ddohook.csproj">

@@ -46,9 +46,18 @@ namespace dclog
         /// </summary>
         private void InitializeComponent()
         {
-          System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-          System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-          System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+          this.components = new System.ComponentModel.Container();
+          System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+          System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+          System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+          System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+          System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+          System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+          System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
+            "Damage received",
+            "Damage received"}, -1);
+          System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("Damage received by type");
+          System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("Damage received by monster");
           this.menuStrip1 = new System.Windows.Forms.MenuStrip();
           this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.attach = new System.Windows.Forms.ToolStripMenuItem();
@@ -60,12 +69,19 @@ namespace dclog
           this.tabPage3 = new System.Windows.Forms.TabPage();
           this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
           this.groupBox1 = new System.Windows.Forms.GroupBox();
+          this.ststatus = new System.Windows.Forms.Label();
           this.ststop = new System.Windows.Forms.Button();
           this.ststart = new System.Windows.Forms.Button();
           this.sttarget = new System.Windows.Forms.ComboBox();
           this.label1 = new System.Windows.Forms.Label();
           this.dpschart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-          this.ststatus = new System.Windows.Forms.Label();
+          this.tabPage4 = new System.Windows.Forms.TabPage();
+          this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+          this.tankchart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+          this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+          this.tankmeter = new System.Windows.Forms.ListView();
+          this.tankrefresh = new System.Windows.Forms.Button();
+          this.tanktimer = new System.Windows.Forms.Timer(this.components);
           this.menuStrip1.SuspendLayout();
           this.maintabs.SuspendLayout();
           this.tabPage1.SuspendLayout();
@@ -74,6 +90,10 @@ namespace dclog
           this.tableLayoutPanel1.SuspendLayout();
           this.groupBox1.SuspendLayout();
           ((System.ComponentModel.ISupportInitialize)(this.dpschart)).BeginInit();
+          this.tabPage4.SuspendLayout();
+          this.tableLayoutPanel2.SuspendLayout();
+          ((System.ComponentModel.ISupportInitialize)(this.tankchart)).BeginInit();
+          this.tableLayoutPanel3.SuspendLayout();
           this.SuspendLayout();
           // 
           // menuStrip1
@@ -106,6 +126,7 @@ namespace dclog
           this.maintabs.Controls.Add(this.tabPage1);
           this.maintabs.Controls.Add(this.tabPage2);
           this.maintabs.Controls.Add(this.tabPage3);
+          this.maintabs.Controls.Add(this.tabPage4);
           this.maintabs.Dock = System.Windows.Forms.DockStyle.Fill;
           this.maintabs.Location = new System.Drawing.Point(0, 24);
           this.maintabs.Name = "maintabs";
@@ -202,6 +223,16 @@ namespace dclog
           this.groupBox1.TabStop = false;
           this.groupBox1.Text = "Target";
           // 
+          // ststatus
+          // 
+          this.ststatus.AutoSize = true;
+          this.ststatus.ForeColor = System.Drawing.Color.Red;
+          this.ststatus.Location = new System.Drawing.Point(207, 71);
+          this.ststatus.Name = "ststatus";
+          this.ststatus.Size = new System.Drawing.Size(56, 13);
+          this.ststatus.TabIndex = 4;
+          this.ststatus.Text = "Stopped...";
+          // 
           // ststop
           // 
           this.ststop.Location = new System.Drawing.Point(91, 71);
@@ -243,33 +274,120 @@ namespace dclog
           // 
           // dpschart
           // 
-          chartArea3.AxisX.Title = "Seconds";
-          chartArea3.AxisY.Title = "DPS";
-          chartArea3.Name = "ChartArea1";
-          this.dpschart.ChartAreas.Add(chartArea3);
+          chartArea1.AxisX.Title = "Seconds";
+          chartArea1.AxisY.Title = "DPS";
+          chartArea1.Name = "ChartArea1";
+          this.dpschart.ChartAreas.Add(chartArea1);
           this.dpschart.Dock = System.Windows.Forms.DockStyle.Fill;
-          legend3.Name = "Legend1";
-          this.dpschart.Legends.Add(legend3);
+          legend1.Name = "Legend1";
+          this.dpschart.Legends.Add(legend1);
           this.dpschart.Location = new System.Drawing.Point(3, 113);
           this.dpschart.Name = "dpschart";
-          series3.ChartArea = "ChartArea1";
-          series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-          series3.Legend = "Legend1";
-          series3.Name = "DPS";
-          this.dpschart.Series.Add(series3);
+          series1.ChartArea = "ChartArea1";
+          series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+          series1.Legend = "Legend1";
+          series1.Name = "DPS";
+          this.dpschart.Series.Add(series1);
           this.dpschart.Size = new System.Drawing.Size(863, 315);
           this.dpschart.TabIndex = 4;
           this.dpschart.Text = "Single Target DPS";
           // 
-          // ststatus
+          // tabPage4
           // 
-          this.ststatus.AutoSize = true;
-          this.ststatus.ForeColor = System.Drawing.Color.Red;
-          this.ststatus.Location = new System.Drawing.Point(207, 71);
-          this.ststatus.Name = "ststatus";
-          this.ststatus.Size = new System.Drawing.Size(56, 13);
-          this.ststatus.TabIndex = 4;
-          this.ststatus.Text = "Stopped...";
+          this.tabPage4.Controls.Add(this.tableLayoutPanel2);
+          this.tabPage4.Location = new System.Drawing.Point(4, 22);
+          this.tabPage4.Name = "tabPage4";
+          this.tabPage4.Size = new System.Drawing.Size(869, 431);
+          this.tabPage4.TabIndex = 3;
+          this.tabPage4.Text = "Tank Meter";
+          this.tabPage4.UseVisualStyleBackColor = true;
+          // 
+          // tableLayoutPanel2
+          // 
+          this.tableLayoutPanel2.ColumnCount = 2;
+          this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
+          this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+          this.tableLayoutPanel2.Controls.Add(this.tankchart, 1, 0);
+          this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 0);
+          this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+          this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
+          this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+          this.tableLayoutPanel2.RowCount = 1;
+          this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+          this.tableLayoutPanel2.Size = new System.Drawing.Size(869, 431);
+          this.tableLayoutPanel2.TabIndex = 0;
+          // 
+          // tankchart
+          // 
+          chartArea2.Name = "ChartArea1";
+          this.tankchart.ChartAreas.Add(chartArea2);
+          this.tankchart.Dock = System.Windows.Forms.DockStyle.Fill;
+          legend2.Name = "Legend1";
+          this.tankchart.Legends.Add(legend2);
+          this.tankchart.Location = new System.Drawing.Point(203, 3);
+          this.tankchart.Name = "tankchart";
+          series2.ChartArea = "ChartArea1";
+          series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie;
+          series2.Legend = "Legend1";
+          series2.Name = "Series1";
+          series2.SmartLabelStyle.AllowOutsidePlotArea = System.Windows.Forms.DataVisualization.Charting.LabelOutsidePlotAreaStyle.No;
+          this.tankchart.Series.Add(series2);
+          this.tankchart.Size = new System.Drawing.Size(663, 425);
+          this.tankchart.TabIndex = 1;
+          this.tankchart.Text = "Tank Chart";
+          // 
+          // tableLayoutPanel3
+          // 
+          this.tableLayoutPanel3.ColumnCount = 1;
+          this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+          this.tableLayoutPanel3.Controls.Add(this.tankmeter, 0, 0);
+          this.tableLayoutPanel3.Controls.Add(this.tankrefresh, 0, 1);
+          this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+          this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 3);
+          this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+          this.tableLayoutPanel3.RowCount = 2;
+          this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+          this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+          this.tableLayoutPanel3.Size = new System.Drawing.Size(194, 425);
+          this.tableLayoutPanel3.TabIndex = 2;
+          // 
+          // tankmeter
+          // 
+          this.tankmeter.Activation = System.Windows.Forms.ItemActivation.OneClick;
+          this.tankmeter.Dock = System.Windows.Forms.DockStyle.Fill;
+          this.tankmeter.FullRowSelect = true;
+          this.tankmeter.GridLines = true;
+          this.tankmeter.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+          this.tankmeter.HideSelection = false;
+          this.tankmeter.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem1,
+            listViewItem2,
+            listViewItem3});
+          this.tankmeter.Location = new System.Drawing.Point(3, 3);
+          this.tankmeter.MultiSelect = false;
+          this.tankmeter.Name = "tankmeter";
+          this.tankmeter.ShowGroups = false;
+          this.tankmeter.Size = new System.Drawing.Size(188, 384);
+          this.tankmeter.TabIndex = 1;
+          this.tankmeter.UseCompatibleStateImageBehavior = false;
+          this.tankmeter.View = System.Windows.Forms.View.List;
+          this.tankmeter.SelectedIndexChanged += new System.EventHandler(this.tankmeter_SelectedIndexChanged);
+          // 
+          // tankrefresh
+          // 
+          this.tankrefresh.Location = new System.Drawing.Point(3, 393);
+          this.tankrefresh.Name = "tankrefresh";
+          this.tankrefresh.Size = new System.Drawing.Size(75, 23);
+          this.tankrefresh.TabIndex = 2;
+          this.tankrefresh.Text = "Refresh";
+          this.tankrefresh.UseVisualStyleBackColor = true;
+          this.tankrefresh.Click += new System.EventHandler(this.tankrefresh_Click);
+          // 
+          // tanktimer
+          // 
+          this.tanktimer.Enabled = true;
+          this.tanktimer.Interval = 1000;
+          this.tanktimer.Tick += new System.EventHandler(this.tanktimer_Tick);
           // 
           // MainWindow
           // 
@@ -294,6 +412,10 @@ namespace dclog
           this.groupBox1.ResumeLayout(false);
           this.groupBox1.PerformLayout();
           ((System.ComponentModel.ISupportInitialize)(this.dpschart)).EndInit();
+          this.tabPage4.ResumeLayout(false);
+          this.tableLayoutPanel2.ResumeLayout(false);
+          ((System.ComponentModel.ISupportInitialize)(this.tankchart)).EndInit();
+          this.tableLayoutPanel3.ResumeLayout(false);
           this.ResumeLayout(false);
           this.PerformLayout();
 
@@ -318,6 +440,13 @@ namespace dclog
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataVisualization.Charting.Chart dpschart;
         private System.Windows.Forms.Label ststatus;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.DataVisualization.Charting.Chart tankchart;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.ListView tankmeter;
+        private System.Windows.Forms.Button tankrefresh;
+        private System.Windows.Forms.Timer tanktimer;
     }
 }
 

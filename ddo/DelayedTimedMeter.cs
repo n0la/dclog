@@ -82,11 +82,7 @@ namespace LibDDO.Combat.DPS
       State = MeterState.Stopped;
     }
 
-    public virtual void DamageDone(CombatLogMessage msg)
-    {
-    }
-
-    public virtual void TargetKilled(CombatLogMessage msg)
+    public virtual void OnCombatLog(CombatLogMessage msg)
     {
     }
 

@@ -18,16 +18,28 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Globalization;
 using System.Text;
 
-namespace LibDDO.Combat.DPS
+namespace LibDDO
 {
-  public interface IDPSMeter : ICombatLogListener
+  public class StringValue : Attribute
   {
-    void Start();
-    void Stop();
-    double Result { get; }
-    TimeSpan TimePassed { get; }
+    private string value = "";
+    private CultureInfo language = CultureInfo.CreateSpecificCulture("en-GB");
+
+    public StringValue(string value)
+    {
+      this.value = value;
+    }
+
+    public StringValue(string value, CultureInfo language)
+    {
+      this.value = value;
+      this.language = language;
+    }
+
+    public CultureInfo Language { get { return language; } }
+    public string Value { get { return value; } }
   }
 }

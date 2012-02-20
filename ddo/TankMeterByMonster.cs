@@ -18,16 +18,32 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
-namespace LibDDO.Combat.DPS
+namespace LibDDO.Combat.Tanking
 {
-  public interface IDPSMeter : ICombatLogListener
+  /// <summary>
+  /// Gives detailed information of damage received stored by the monster
+  /// that hit you.
+  /// </summary>
+  public class TankMeterByMonster : ITankMeter
   {
-    void Start();
-    void Stop();
-    double Result { get; }
-    TimeSpan TimePassed { get; }
+    private Dictionary<string, Damage> dmg = new Dictionary<string, Damage>();
+    
+    public void OnCombatLog(CombatLogMessage msg)
+    {
+      if (msg.Type == CombatLogType.DamageTaken)
+      {
+        string str = msg.Damage.Source;
+        if (!dmg.ContainsKey(str))
+        { // add reference
+          dmg[str] = new Damage();
+        }
+
+        dmg[str] += msg.Damage;
+      }
+    }
+
+    public Dictionary<string, Damage> DamageValues { get { return dmg; } } 
   }
 }

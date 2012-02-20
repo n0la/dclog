@@ -18,16 +18,25 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
-namespace LibDDO.Combat.DPS
+namespace LibDDO.Combat.Tanking
 {
-  public interface IDPSMeter : ICombatLogListener
+  public class SimpleTankMeter : ITankMeter
   {
-    void Start();
-    void Stop();
-    double Result { get; }
-    TimeSpan TimePassed { get; }
+    private uint damagetaken = 0;
+    private uint damageblocked = 0;
+
+    public void OnCombatLog(CombatLogMessage msg)
+    {
+      if (msg.Type == CombatLogType.DamageTaken)
+      {
+        damagetaken += msg.Damage.Points;
+        damageblocked += msg.Damage.Blocked;
+      }
+    }
+
+    public uint DamageTaken { get { return damagetaken; } }
+    public uint DamageBlocked { get { return damageblocked; } }
   }
 }

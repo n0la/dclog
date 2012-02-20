@@ -25,17 +25,34 @@ namespace LibDDO.Combat
 {
   public enum DamageType : int
   {
+    [StringValue("Unkown")]
     Unknown = 0,
+    [StringValue("Slashing")]
     Slashing,
+    [StringValue("Piercing")]
     Piercing,
+    [StringValue("Bludgeoning")]
     Bludgeoning,
+    [StringValue("Acid")]
     Acid,
+    [StringValue("Fire")]
     Fire,
+    [StringValue("Good")]
     Good,
+    [StringValue("Cold")]
     Cold,
+    [StringValue("Shock")]
     Shock,
+    [StringValue("Chaotic")]
     Chaotic,
-    Sonic
+    [StringValue("Sonic")]
+    Sonic,
+    [StringValue("Force")]
+    Force,
+    [StringValue("Evil")]
+    Evil,
+    [StringValue("Lawful")]
+    Lawful,
   }
 
   public class Damage
@@ -64,14 +81,14 @@ namespace LibDDO.Combat
     }
 
     /// <summary>
-    /// Effective damage done, i.e. Points - Blocked;
+    /// Damage potential (i.e. points + blocked)
     /// </summary>
-    public uint EffectiveDamage
+    public uint PotentialDamage
     {
       get 
       {
-        uint effective = points - blocked;
-        return (effective >= 0 ? effective : 0);
+        uint pot = points + blocked;
+        return pot;
       }
     }
 
@@ -103,6 +120,13 @@ namespace LibDDO.Combat
     public DamageType Type
     {
       get { return type; }
+    }
+
+    public static Damage operator + ( Damage a, Damage d ) {
+      a.points += d.points;
+      a.blocked += d.blocked;
+
+      return a;
     }
   }
 }

@@ -34,7 +34,7 @@ namespace LibDDO
     private static DDO instance = new DDO();
     private string channelname = null;
     private CombatLog combatlog = new CombatLog();
-    private List<IDPSMeter> dpsmeters = new List<IDPSMeter>();
+    private List<ICombatLogListener> listeners = new List<ICombatLogListener>();
 
     public delegate void DDONotifyDelegate(DDO sender, string message);
     public delegate void DDOOnCombatLogMessageDelegate(DDO sender, CombatLogMessage message);
@@ -51,31 +51,21 @@ namespace LibDDO
     {
     }
 
-    public void RegisterDPSMeter(IDPSMeter meter)
+    public void RegisterListener(ICombatLogListener meter)
     {
-      dpsmeters.Add(meter);
+      listeners.Add(meter);
     }
 
-    public void DeregisterDPSMeter(IDPSMeter meter)
+    public void DeregisterListener(ICombatLogListener meter)
     {
-      dpsmeters.Remove(meter);
+      listeners.Remove(meter);
     }
 
     private void HandleMeters(CombatLogMessage msg)
     {
-      if (msg.Type == CombatLogType.DamageDone)
+      foreach (ICombatLogListener m in listeners)
       {
-        foreach (IDPSMeter m in dpsmeters)
-        {
-          m.DamageDone(msg);
-        }
-      }
-      else if (msg.Type == CombatLogType.TargetKilled)
-      {
-        foreach (IDPSMeter m in dpsmeters)
-        {
-          m.TargetKilled(msg);
-        }
+        m.OnCombatLog(msg);
       }
     }
 

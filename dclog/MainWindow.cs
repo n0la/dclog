@@ -27,9 +27,11 @@ using System.Windows.Forms;
 using System.Runtime.Remoting;
 using System.Threading;
 using System.Diagnostics;
+using System.Windows.Forms.DataVisualization.Charting;
 using LibDDO;
 using LibDDO.Combat;
 using LibDDO.Combat.DPS;
+using LibDDO.Combat.Tanking;
 
 namespace dclog
 {
@@ -37,6 +39,9 @@ namespace dclog
   {
     private Logger mainlogger = new Logger();
     private SingleTargetMeter singletarget = new SingleTargetMeter();
+    private SimpleTankMeter stm = new SimpleTankMeter();
+    private TankMeterByMonster tmb = new TankMeterByMonster();
+    private TankMeterByType tmt = new TankMeterByType();
 
     public MainWindow()
     {
@@ -45,9 +50,13 @@ namespace dclog
       mainlogger.OnNewLog += new Logger.DOnNewLog(mainlogger_OnNewLog);
       DDO.Instance.OnNotify += new DDO.DDONotifyDelegate(Instance_OnNotify);
       DDO.Instance.OnCombatLogMessage += new DDO.DDOOnCombatLogMessageDelegate(Instance_OnCombatLogMessage);
-      DDO.Instance.RegisterDPSMeter(singletarget);
+      DDO.Instance.RegisterListener(singletarget);
       singletarget.Ticked += new DPSMeterTickedDelegate(singletarget_Ticked);
       singletarget.StateChanged += new DPSMeterStateChangedDelegate(singletarget_StateChanged);
+
+      DDO.Instance.RegisterListener(stm);
+      DDO.Instance.RegisterListener(tmb);
+      DDO.Instance.RegisterListener(tmt);
     }
 
     private void attach_Click(object sender, EventArgs e)
@@ -106,7 +115,11 @@ namespace dclog
 
     void Instance_OnCombatLogMessage(DDO sender, CombatLogMessage message)
     {
-      combatlog.AppendText(message.ToString() + "\r\n");
+      StringBuilder msg = new StringBuilder();
+
+      msg.Append(message.ToString());
+      msg.Append("\r\n");
+      combatlog.AppendText(msg.ToString());
     }
 
     void Instance_OnNotify(DDO sender, string message)
@@ -123,14 +136,14 @@ namespace dclog
     {
       combatlog.SelectionStart = combatlog.Text.Length;
       combatlog.ScrollToCaret();
-      combatlog.Refresh();
+      //combatlog.Refresh();
     }
 
     private void applog_TextChanged(object sender, EventArgs e)
     {
       applog.SelectionStart = applog.Text.Length;
       applog.ScrollToCaret();
-      applog.Refresh();
+      //applog.Refresh();
     }
 
     private void ststart_Click(object sender, EventArgs e)
@@ -165,6 +178,82 @@ namespace dclog
         case MeterState.Stopped: ststatus.Text = "Stopped!"; ststatus.ForeColor = Color.Red; break;
         case MeterState.Running: ststatus.Text = "Running!"; ststatus.ForeColor = Color.Green; break;
       }
+    }
+
+    private void tankmeter_SelectedIndexChanged(object sender, EventArgs e)
+    {
+      tankrefresh_Click(sender, e);
+    }
+
+    private DataPoint CreateNamedPoint(string name, double x, double y)
+    {
+      DataPoint pnt = new DataPoint(x, y);
+      pnt.Label = name;
+
+      return pnt;
+    }
+
+    private DataPoint CreateNamedPoint(string name, double value)
+    {
+      DataPoint pnt = new DataPoint(value, value);
+      pnt.Label = value.ToString();
+      pnt.ToolTip = pnt.LegendText = name + ": " + value.ToString();
+
+      return pnt;
+    }
+
+    private void RefreshSimple()
+    {
+      Series cur = tankchart.Series[0];
+      cur.Points.Clear();
+      cur.Points.Add(CreateNamedPoint("Damage taken", stm.DamageTaken));
+      cur.Points.Add(CreateNamedPoint("Damage blocked", stm.DamageBlocked));
+    }
+
+    private void RefreshByMonster()
+    {
+      Series cur = tankchart.Series[0];
+
+      cur.Points.Clear();
+
+      foreach (var p in tmb.DamageValues)
+      {
+        cur.Points.Add(CreateNamedPoint(p.Key, p.Value.Points));
+      }
+    }
+
+    private void RefreshByType()
+    {
+      Series cur = tankchart.Series[0];
+
+      cur.Points.Clear();
+
+      foreach (var p in tmt.DamageValues)
+      {
+        cur.Points.Add(CreateNamedPoint(p.Key.ToString(), p.Value.Points));
+      }
+    }
+
+    private void tankrefresh_Click(object sender, EventArgs e)
+    {
+      if (tankmeter.SelectedIndices.Count == 0)
+      {
+        return;
+      }
+      int selected = tankmeter.SelectedIndices[0];
+
+      switch (selected)
+      {
+        case 0: RefreshSimple(); break;
+        case 2: RefreshByMonster(); break;
+        case 1: RefreshByType(); break;
+      }
+
+    }
+
+    private void tanktimer_Tick(object sender, EventArgs e)
+    {
+      tankrefresh_Click(sender, e);
     }
   }
 }

@@ -16,18 +16,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace LibDDO.Combat.DPS
+namespace LibDDO.Combat
 {
-  public interface IDPSMeter : ICombatLogListener
+  public interface ICombatLogListener
   {
-    void Start();
-    void Stop();
-    double Result { get; }
-    TimeSpan TimePassed { get; }
+    void OnCombatLog(CombatLogMessage msg);
   }
 }

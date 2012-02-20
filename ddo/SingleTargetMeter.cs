@@ -52,34 +52,32 @@ namespace LibDDO.Combat.DPS
       base.Start();
       damagedone = 0;
     }
-    
-    public override void TargetKilled(CombatLogMessage msg)
+
+    public override void OnCombatLog(CombatLogMessage msg)
     {
       if (State == MeterState.Stopped)
       {
         return;
       }
 
-      // Stop if our target was killed.
-      if (String.Compare(msg.Target, target, true) == 0)
+      if (msg.Type == CombatLogType.DamageDone)
       {
-        Stop();
-      }
-    }
 
-    public override void DamageDone(CombatLogMessage msg)
-    {
-      if (State == MeterState.Stopped)
-      {
-        return;
+        if (String.Compare(msg.Damage.Target, target, true) == 0)
+        {
+          damagedone += msg.Damage.Points;
+          if (State != MeterState.Running)
+          { // change state to running since we hit our target
+            State = MeterState.Running;
+          }
+        }
       }
-
-      if (String.Compare(msg.Damage.Target, target, true) == 0)
+      else if (msg.Type == CombatLogType.TargetKilled)
       {
-        damagedone += msg.Damage.EffectiveDamage;
-        if (State != MeterState.Running)
-        { // change state to running since we hit our target
-          State = MeterState.Running;
+        // Stop if our target was killed.
+        if (String.Compare(msg.Target, target, true) == 0)
+        {
+          Stop();
         }
       }
     }
