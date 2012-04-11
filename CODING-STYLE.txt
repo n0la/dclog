@@ -1,0 +1,9 @@
+
+ The general coding styles are the same as C# uses with one difference:
+ 
+  o No tabs, instead spaces are used to indent.
+  o Indent width is 2 spaces.
+ 
+ In Visual C# Express 2010 go to Tools -> Options. Select the checkbox saying
+ "Show all settings" and go to "Text Editor" -> "C#" -> "Tabs". There you can 
+ set the indent size and tab size to 2, and select the option to insert spaces.

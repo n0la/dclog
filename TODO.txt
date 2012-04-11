@@ -1,0 +1,21 @@
+
+ A general TODO list for this project:
+ 
+ MUST HAVE
+ 
+  o Working average DPS meter across different monsters, showing how much
+    damage you currently do.
+  o Exporting graphs and data to file so others can view and you can view it
+    later.
+  o DDO client support for German and French versions.
+
+ NICE TO HAVE
+
+  o Hook DLL written in C so it does not slow down the game. Perhaps a better 
+    way to deploy and hook DDO, like a service running in the background. Care
+	must be taken not to break the i18n support DDO offers through using wide
+	character strings.
+  o XP/min graph.
+  o The application should automatically write the combat log to file as well as
+    parse it for its own use.
+ 
