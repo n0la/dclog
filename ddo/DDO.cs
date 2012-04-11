@@ -51,6 +51,11 @@ namespace LibDDO
     {
     }
 
+    public CombatLog CombatLog 
+    { 
+      get { return combatlog; } 
+    }
+
     public void RegisterListener(ICombatLogListener meter)
     {
       listeners.Add(meter);

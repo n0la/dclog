@@ -45,6 +45,7 @@ namespace LibDDO.Combat
     private string target = "";
     private DateTime timestamp ;
     private StringBuilder b = new StringBuilder();
+    private StringBuilder orig = new StringBuilder();
     private CombatLogType type = CombatLogType.Unknown;
     private Damage damage = new Damage();
     private CombatLogMessageState state = CombatLogMessageState.Unknown;
@@ -100,6 +101,16 @@ namespace LibDDO.Combat
     public DateTime TimeStamp
     {
       get { return timestamp; }
+    }
+
+    public string ToOriginalString()
+    {
+      if (orig.Length == 0)
+      {
+        orig.Append("(Combat): ");
+        orig.Append(message);
+      }
+      return orig.ToString();
     }
 
     public override string ToString()

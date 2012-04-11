@@ -21,8 +21,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
+using System.IO;
 using System.Windows.Forms;
 using System.Runtime.Remoting;
 using System.Threading;
@@ -57,6 +57,114 @@ namespace dclog
       DDO.Instance.RegisterListener(stm);
       DDO.Instance.RegisterListener(tmb);
       DDO.Instance.RegisterListener(tmt);
+    }
+
+    public void CreateDeveloper()
+    {
+      ToolStripMenuItem dev = new ToolStripMenuItem("Developer");
+
+      ToolStripMenuItem feed = new ToolStripMenuItem("Feed combat log...");
+      ToolStripMenuItem fromtext = new ToolStripMenuItem("... from text");
+      ToolStripMenuItem fromfile = new ToolStripMenuItem("... from file");
+      
+      fromtext.Click += new EventHandler(fromtext_Click);
+      fromfile.Click += new EventHandler(fromfile_Click);
+      feed.DropDownItems.Add(fromtext);
+      feed.DropDownItems.Add(fromfile);
+
+      ToolStripMenuItem export = new ToolStripMenuItem("Export to file");
+      export.Click += new EventHandler(export_Click);
+
+      dev.DropDownItems.Add(feed);
+      dev.DropDownItems.Add(new ToolStripSeparator());
+      dev.DropDownItems.Add(export);
+
+      mainmenu.Items.Insert(1, dev);
+    }
+
+    void export_Click(object sender, EventArgs e)
+    {
+      try
+      {
+        SaveFileDialog dlg = new SaveFileDialog();
+
+        dlg.Title = "Export to text file...";
+        dlg.Filter = "Text files (*.txt)|*.txt";
+
+        if (dlg.ShowDialog(this) == DialogResult.OK)
+        {
+          FileStream stream = new FileStream(dlg.FileName, FileMode.Create);
+          StreamWriter writer = new StreamWriter(stream);
+
+          foreach (CombatLogMessage msg in DDO.Instance.CombatLog.Messages)
+          {
+            writer.WriteLine(msg.ToOriginalString());
+          }
+
+          writer.Flush();
+          writer.Close();
+        }
+      }
+      catch (Exception ex)
+      {
+        MessageBox.Show(this,
+                        "Error occured while writing text file: " + ex.Message,
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                        ); 
+      }
+    }
+
+    void fromfile_Click(object sender, EventArgs e)
+    {
+      try
+      {
+        OpenFileDialog dlg = new OpenFileDialog();
+
+        dlg.Title = "Open combat log file...";
+        dlg.CheckFileExists = dlg.CheckPathExists = true;
+        dlg.Filter = "All files *.*|*.*";
+
+        if (dlg.ShowDialog(this) == DialogResult.OK)
+        {
+          FileStream stream = new FileStream(dlg.FileNames[0], FileMode.Open);
+          StreamReader reader = new StreamReader(stream);
+
+          while (!reader.EndOfStream)
+          {
+            string line = reader.ReadLine();
+            if (line.Length > 0)
+            { // Add line to combat log
+              DDO.Instance.AddCombatLogMessage(line);
+            }
+          }
+        }
+      }
+      catch (Exception ex)
+      {
+        MessageBox.Show(this,
+                        "Error occured while reading text file: " + ex.Message,
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                        );                    
+      }
+    }
+
+    void fromtext_Click(object sender, EventArgs e)
+    {
+      FeedDialog dlg = new FeedDialog();
+
+      dlg.ShowDialog(this);
+      if (dlg.DialogResult == DialogResult.OK)
+      {
+        // Add lines to combat log
+        foreach (string s in dlg.Lines)
+        {
+          DDO.Instance.AddCombatLogMessage(s);
+        }
+      }
     }
 
     private void attach_Click(object sender, EventArgs e)

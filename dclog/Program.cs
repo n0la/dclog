@@ -29,11 +29,18 @@ namespace dclog
     /// The main entry point for the application.
     /// </summary>
     [STAThread]
-    static void Main()
+    static void Main(string[] args)
     {
       Application.EnableVisualStyles();
       Application.SetCompatibleTextRenderingDefault(false);
-      Application.Run(new MainWindow());
+      MainWindow wnd = new MainWindow();
+
+      if (args.Contains("-d") || args.Contains("--devel"))
+      {
+          wnd.CreateDeveloper();
+      }
+
+      Application.Run(wnd);
     }
   }
 }

@@ -47,18 +47,18 @@ namespace dclog
         private void InitializeComponent()
         {
           this.components = new System.ComponentModel.Container();
-          System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-          System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-          System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-          System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-          System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-          System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-          System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
+          System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+          System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+          System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+          System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+          System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+          System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+          System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(new string[] {
             "Damage received",
             "Damage received"}, -1);
-          System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("Damage received by type");
-          System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("Damage received by monster");
-          this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+          System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("Damage received by type");
+          System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("Damage received by monster");
+          this.mainmenu = new System.Windows.Forms.MenuStrip();
           this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.attach = new System.Windows.Forms.ToolStripMenuItem();
           this.maintabs = new System.Windows.Forms.TabControl();
@@ -82,7 +82,7 @@ namespace dclog
           this.tankmeter = new System.Windows.Forms.ListView();
           this.tankrefresh = new System.Windows.Forms.Button();
           this.tanktimer = new System.Windows.Forms.Timer(this.components);
-          this.menuStrip1.SuspendLayout();
+          this.mainmenu.SuspendLayout();
           this.maintabs.SuspendLayout();
           this.tabPage1.SuspendLayout();
           this.tabPage2.SuspendLayout();
@@ -96,28 +96,28 @@ namespace dclog
           this.tableLayoutPanel3.SuspendLayout();
           this.SuspendLayout();
           // 
-          // menuStrip1
+          // mainmenu
           // 
-          this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+          this.mainmenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem});
-          this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-          this.menuStrip1.Name = "menuStrip1";
-          this.menuStrip1.Size = new System.Drawing.Size(877, 24);
-          this.menuStrip1.TabIndex = 0;
-          this.menuStrip1.Text = "menuStrip1";
+          this.mainmenu.Location = new System.Drawing.Point(0, 0);
+          this.mainmenu.Name = "mainmenu";
+          this.mainmenu.Size = new System.Drawing.Size(877, 24);
+          this.mainmenu.TabIndex = 0;
+          this.mainmenu.Text = "menuStrip1";
           // 
           // fileToolStripMenuItem
           // 
           this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.attach});
           this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-          this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+          this.fileToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
           this.fileToolStripMenuItem.Text = "File";
           // 
           // attach
           // 
           this.attach.Name = "attach";
-          this.attach.Size = new System.Drawing.Size(118, 22);
+          this.attach.Size = new System.Drawing.Size(129, 22);
           this.attach.Text = "Attach...";
           this.attach.Click += new System.EventHandler(this.attach_Click);
           // 
@@ -274,20 +274,20 @@ namespace dclog
           // 
           // dpschart
           // 
-          chartArea1.AxisX.Title = "Seconds";
-          chartArea1.AxisY.Title = "DPS";
-          chartArea1.Name = "ChartArea1";
-          this.dpschart.ChartAreas.Add(chartArea1);
+          chartArea3.AxisX.Title = "Seconds";
+          chartArea3.AxisY.Title = "DPS";
+          chartArea3.Name = "ChartArea1";
+          this.dpschart.ChartAreas.Add(chartArea3);
           this.dpschart.Dock = System.Windows.Forms.DockStyle.Fill;
-          legend1.Name = "Legend1";
-          this.dpschart.Legends.Add(legend1);
+          legend3.Name = "Legend1";
+          this.dpschart.Legends.Add(legend3);
           this.dpschart.Location = new System.Drawing.Point(3, 113);
           this.dpschart.Name = "dpschart";
-          series1.ChartArea = "ChartArea1";
-          series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-          series1.Legend = "Legend1";
-          series1.Name = "DPS";
-          this.dpschart.Series.Add(series1);
+          series3.ChartArea = "ChartArea1";
+          series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+          series3.Legend = "Legend1";
+          series3.Name = "DPS";
+          this.dpschart.Series.Add(series3);
           this.dpschart.Size = new System.Drawing.Size(863, 315);
           this.dpschart.TabIndex = 4;
           this.dpschart.Text = "Single Target DPS";
@@ -319,19 +319,19 @@ namespace dclog
           // 
           // tankchart
           // 
-          chartArea2.Name = "ChartArea1";
-          this.tankchart.ChartAreas.Add(chartArea2);
+          chartArea4.Name = "ChartArea1";
+          this.tankchart.ChartAreas.Add(chartArea4);
           this.tankchart.Dock = System.Windows.Forms.DockStyle.Fill;
-          legend2.Name = "Legend1";
-          this.tankchart.Legends.Add(legend2);
+          legend4.Name = "Legend1";
+          this.tankchart.Legends.Add(legend4);
           this.tankchart.Location = new System.Drawing.Point(203, 3);
           this.tankchart.Name = "tankchart";
-          series2.ChartArea = "ChartArea1";
-          series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie;
-          series2.Legend = "Legend1";
-          series2.Name = "Series1";
-          series2.SmartLabelStyle.AllowOutsidePlotArea = System.Windows.Forms.DataVisualization.Charting.LabelOutsidePlotAreaStyle.No;
-          this.tankchart.Series.Add(series2);
+          series4.ChartArea = "ChartArea1";
+          series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie;
+          series4.Legend = "Legend1";
+          series4.Name = "Series1";
+          series4.SmartLabelStyle.AllowOutsidePlotArea = System.Windows.Forms.DataVisualization.Charting.LabelOutsidePlotAreaStyle.No;
+          this.tankchart.Series.Add(series4);
           this.tankchart.Size = new System.Drawing.Size(663, 425);
           this.tankchart.TabIndex = 1;
           this.tankchart.Text = "Tank Chart";
@@ -360,9 +360,9 @@ namespace dclog
           this.tankmeter.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
           this.tankmeter.HideSelection = false;
           this.tankmeter.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3});
+            listViewItem4,
+            listViewItem5,
+            listViewItem6});
           this.tankmeter.Location = new System.Drawing.Point(3, 3);
           this.tankmeter.MultiSelect = false;
           this.tankmeter.Name = "tankmeter";
@@ -395,13 +395,13 @@ namespace dclog
           this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
           this.ClientSize = new System.Drawing.Size(877, 481);
           this.Controls.Add(this.maintabs);
-          this.Controls.Add(this.menuStrip1);
-          this.MainMenuStrip = this.menuStrip1;
+          this.Controls.Add(this.mainmenu);
+          this.MainMenuStrip = this.mainmenu;
           this.Name = "MainWindow";
           this.Text = "dclog - DDO Combat Log";
           this.Load += new System.EventHandler(this.MainWindow_Load);
-          this.menuStrip1.ResumeLayout(false);
-          this.menuStrip1.PerformLayout();
+          this.mainmenu.ResumeLayout(false);
+          this.mainmenu.PerformLayout();
           this.maintabs.ResumeLayout(false);
           this.tabPage1.ResumeLayout(false);
           this.tabPage1.PerformLayout();
@@ -423,7 +423,7 @@ namespace dclog
 
         #endregion
 
-        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.MenuStrip mainmenu;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem attach;
         private System.Windows.Forms.TabControl maintabs;
