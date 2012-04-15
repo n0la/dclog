@@ -18,13 +18,24 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
 using System.Text;
+using System.Windows.Forms;
 
-namespace LibDDO.Combat
+namespace dclog
 {
-  public interface ICombatLogListener
+  public partial class AboutDialog : Form
   {
-    void OnCombatLog(CombatLogMessage msg);
+    public AboutDialog()
+    {
+      InitializeComponent();
+    }
+
+    private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+    {
+      System.Diagnostics.Process.Start(projectsite.Text);
+    }
   }
 }

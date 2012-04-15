@@ -363,5 +363,22 @@ namespace dclog
     {
       tankrefresh_Click(sender, e);
     }
+
+    private void quitToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      this.Close();
+    }
+
+    private void reportABugToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      string url = "https://github.com/n0la/dclog/issues";
+      System.Diagnostics.Process.Start(url);
+    }
+
+    private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      AboutDialog dlg = new AboutDialog();
+      dlg.ShowDialog(this);
+    }
   }
 }
