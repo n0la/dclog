@@ -67,12 +67,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration.cs" />
     <Compile Include="FeedDialog.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FeedDialog.Designer.cs">
       <DependentUpon>FeedDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="FileLogger.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>

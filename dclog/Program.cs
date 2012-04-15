@@ -34,13 +34,54 @@ namespace dclog
       Application.EnableVisualStyles();
       Application.SetCompatibleTextRenderingDefault(false);
       MainWindow wnd = new MainWindow();
+      FileLogger logger = null;
 
       if (args.Contains("-d") || args.Contains("--devel"))
       {
           wnd.CreateDeveloper();
       }
 
+      try
+      {
+        Configuration c = Configuration.Instance;
+        c.Load();
+
+        logger = new FileLogger();
+        // Run logger.
+        logger.Open();
+        // Register it at the master instance so it gets notified on new messages.
+        LibDDO.DDO.Instance.RegisterListener(logger);
+      }
+      catch (Exception ex)
+      {
+        MessageBox.Show(wnd,
+                        "There appears to be an error with the configuration file:\r\n"
+                        + ex.Message,
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                        );
+      }
+
       Application.Run(wnd);
+
+      try
+      {
+        Configuration c = Configuration.Instance;
+        c.Save();
+
+        logger.Close();
+      }
+      catch (Exception ex)
+      {
+        MessageBox.Show(null,
+                        "There appears to be an error with the configuration file:\r\n"
+                        + ex.Message,
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                        );
+      }
     }
   }
 }
