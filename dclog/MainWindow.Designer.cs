@@ -47,20 +47,26 @@ namespace dclog
         private void InitializeComponent()
         {
           this.components = new System.ComponentModel.Container();
-          System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-          System.Windows.Forms.DataVisualization.Charting.Legend legend7 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-          System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
-          System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea8 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-          System.Windows.Forms.DataVisualization.Charting.Legend legend8 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-          System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
-          System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem(new string[] {
+          System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+          System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+          System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+          System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+          System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+          System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+          System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(new string[] {
             "Damage received",
             "Damage received"}, -1);
-          System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("Damage received by type");
-          System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("Damage received by monster");
+          System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("Damage received by type");
+          System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("Damage received by monster");
           this.mainmenu = new System.Windows.Forms.MenuStrip();
           this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.attach = new System.Windows.Forms.ToolStripMenuItem();
+          this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+          this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+          this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+          this.reportABugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+          this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+          this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.maintabs = new System.Windows.Forms.TabControl();
           this.tabPage1 = new System.Windows.Forms.TabPage();
           this.applog = new System.Windows.Forms.TextBox();
@@ -82,12 +88,9 @@ namespace dclog
           this.tankmeter = new System.Windows.Forms.ListView();
           this.tankrefresh = new System.Windows.Forms.Button();
           this.tanktimer = new System.Windows.Forms.Timer(this.components);
-          this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-          this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-          this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-          this.reportABugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-          this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-          this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+          this.feedTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+          this.feedFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+          this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
           this.mainmenu.SuspendLayout();
           this.maintabs.SuspendLayout();
           this.tabPage1.SuspendLayout();
@@ -117,6 +120,9 @@ namespace dclog
           // 
           this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.attach,
+            this.toolStripSeparator3,
+            this.feedFileToolStripMenuItem,
+            this.feedTextToolStripMenuItem,
             this.toolStripSeparator1,
             this.quitToolStripMenuItem});
           this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
@@ -129,6 +135,47 @@ namespace dclog
           this.attach.Size = new System.Drawing.Size(152, 22);
           this.attach.Text = "Attach...";
           this.attach.Click += new System.EventHandler(this.attach_Click);
+          // 
+          // toolStripSeparator1
+          // 
+          this.toolStripSeparator1.Name = "toolStripSeparator1";
+          this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+          // 
+          // quitToolStripMenuItem
+          // 
+          this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
+          this.quitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+          this.quitToolStripMenuItem.Text = "Quit";
+          this.quitToolStripMenuItem.Click += new System.EventHandler(this.quitToolStripMenuItem_Click);
+          // 
+          // helpToolStripMenuItem
+          // 
+          this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.reportABugToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.aboutToolStripMenuItem});
+          this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+          this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+          this.helpToolStripMenuItem.Text = "Help";
+          // 
+          // reportABugToolStripMenuItem
+          // 
+          this.reportABugToolStripMenuItem.Name = "reportABugToolStripMenuItem";
+          this.reportABugToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+          this.reportABugToolStripMenuItem.Text = "Report a bug";
+          this.reportABugToolStripMenuItem.Click += new System.EventHandler(this.reportABugToolStripMenuItem_Click);
+          // 
+          // toolStripSeparator2
+          // 
+          this.toolStripSeparator2.Name = "toolStripSeparator2";
+          this.toolStripSeparator2.Size = new System.Drawing.Size(139, 6);
+          // 
+          // aboutToolStripMenuItem
+          // 
+          this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+          this.aboutToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+          this.aboutToolStripMenuItem.Text = "About";
+          this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
           // 
           // maintabs
           // 
@@ -283,20 +330,20 @@ namespace dclog
           // 
           // dpschart
           // 
-          chartArea7.AxisX.Title = "Seconds";
-          chartArea7.AxisY.Title = "DPS";
-          chartArea7.Name = "ChartArea1";
-          this.dpschart.ChartAreas.Add(chartArea7);
+          chartArea3.AxisX.Title = "Seconds";
+          chartArea3.AxisY.Title = "DPS";
+          chartArea3.Name = "ChartArea1";
+          this.dpschart.ChartAreas.Add(chartArea3);
           this.dpschart.Dock = System.Windows.Forms.DockStyle.Fill;
-          legend7.Name = "Legend1";
-          this.dpschart.Legends.Add(legend7);
+          legend3.Name = "Legend1";
+          this.dpschart.Legends.Add(legend3);
           this.dpschart.Location = new System.Drawing.Point(3, 113);
           this.dpschart.Name = "dpschart";
-          series7.ChartArea = "ChartArea1";
-          series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-          series7.Legend = "Legend1";
-          series7.Name = "DPS";
-          this.dpschart.Series.Add(series7);
+          series3.ChartArea = "ChartArea1";
+          series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+          series3.Legend = "Legend1";
+          series3.Name = "DPS";
+          this.dpschart.Series.Add(series3);
           this.dpschart.Size = new System.Drawing.Size(863, 315);
           this.dpschart.TabIndex = 4;
           this.dpschart.Text = "Single Target DPS";
@@ -328,19 +375,19 @@ namespace dclog
           // 
           // tankchart
           // 
-          chartArea8.Name = "ChartArea1";
-          this.tankchart.ChartAreas.Add(chartArea8);
+          chartArea4.Name = "ChartArea1";
+          this.tankchart.ChartAreas.Add(chartArea4);
           this.tankchart.Dock = System.Windows.Forms.DockStyle.Fill;
-          legend8.Name = "Legend1";
-          this.tankchart.Legends.Add(legend8);
+          legend4.Name = "Legend1";
+          this.tankchart.Legends.Add(legend4);
           this.tankchart.Location = new System.Drawing.Point(203, 3);
           this.tankchart.Name = "tankchart";
-          series8.ChartArea = "ChartArea1";
-          series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie;
-          series8.Legend = "Legend1";
-          series8.Name = "Series1";
-          series8.SmartLabelStyle.AllowOutsidePlotArea = System.Windows.Forms.DataVisualization.Charting.LabelOutsidePlotAreaStyle.No;
-          this.tankchart.Series.Add(series8);
+          series4.ChartArea = "ChartArea1";
+          series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie;
+          series4.Legend = "Legend1";
+          series4.Name = "Series1";
+          series4.SmartLabelStyle.AllowOutsidePlotArea = System.Windows.Forms.DataVisualization.Charting.LabelOutsidePlotAreaStyle.No;
+          this.tankchart.Series.Add(series4);
           this.tankchart.Size = new System.Drawing.Size(663, 425);
           this.tankchart.TabIndex = 1;
           this.tankchart.Text = "Tank Chart";
@@ -369,9 +416,9 @@ namespace dclog
           this.tankmeter.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
           this.tankmeter.HideSelection = false;
           this.tankmeter.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem10,
-            listViewItem11,
-            listViewItem12});
+            listViewItem4,
+            listViewItem5,
+            listViewItem6});
           this.tankmeter.Location = new System.Drawing.Point(3, 3);
           this.tankmeter.MultiSelect = false;
           this.tankmeter.Name = "tankmeter";
@@ -398,46 +445,24 @@ namespace dclog
           this.tanktimer.Interval = 1000;
           this.tanktimer.Tick += new System.EventHandler(this.tanktimer_Tick);
           // 
-          // toolStripSeparator1
+          // feedTextToolStripMenuItem
           // 
-          this.toolStripSeparator1.Name = "toolStripSeparator1";
-          this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+          this.feedTextToolStripMenuItem.Name = "feedTextToolStripMenuItem";
+          this.feedTextToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+          this.feedTextToolStripMenuItem.Text = "Feed text...";
+          this.feedTextToolStripMenuItem.Click += new System.EventHandler(this.feedTextToolStripMenuItem_Click);
           // 
-          // quitToolStripMenuItem
+          // feedFileToolStripMenuItem
           // 
-          this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
-          this.quitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-          this.quitToolStripMenuItem.Text = "Quit";
-          this.quitToolStripMenuItem.Click += new System.EventHandler(this.quitToolStripMenuItem_Click);
+          this.feedFileToolStripMenuItem.Name = "feedFileToolStripMenuItem";
+          this.feedFileToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+          this.feedFileToolStripMenuItem.Text = "Feed file...";
+          this.feedFileToolStripMenuItem.Click += new System.EventHandler(this.feedFileToolStripMenuItem_Click);
           // 
-          // helpToolStripMenuItem
+          // toolStripSeparator3
           // 
-          this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.reportABugToolStripMenuItem,
-            this.toolStripSeparator2,
-            this.aboutToolStripMenuItem});
-          this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-          this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-          this.helpToolStripMenuItem.Text = "Help";
-          // 
-          // reportABugToolStripMenuItem
-          // 
-          this.reportABugToolStripMenuItem.Name = "reportABugToolStripMenuItem";
-          this.reportABugToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-          this.reportABugToolStripMenuItem.Text = "Report a bug";
-          this.reportABugToolStripMenuItem.Click += new System.EventHandler(this.reportABugToolStripMenuItem_Click);
-          // 
-          // aboutToolStripMenuItem
-          // 
-          this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-          this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-          this.aboutToolStripMenuItem.Text = "About";
-          this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
-          // 
-          // toolStripSeparator2
-          // 
-          this.toolStripSeparator2.Name = "toolStripSeparator2";
-          this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+          this.toolStripSeparator3.Name = "toolStripSeparator3";
+          this.toolStripSeparator3.Size = new System.Drawing.Size(149, 6);
           // 
           // MainWindow
           // 
@@ -503,6 +528,9 @@ namespace dclog
         private System.Windows.Forms.ToolStripMenuItem reportABugToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem feedFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem feedTextToolStripMenuItem;
     }
 }
 

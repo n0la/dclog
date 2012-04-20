@@ -36,11 +36,6 @@ namespace dclog
       MainWindow wnd = new MainWindow();
       FileLogger logger = null;
 
-      if (args.Contains("-d") || args.Contains("--devel"))
-      {
-          wnd.CreateDeveloper();
-      }
-
       try
       {
         Configuration c = Configuration.Instance;
