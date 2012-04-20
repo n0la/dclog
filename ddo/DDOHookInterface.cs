@@ -45,6 +45,11 @@ namespace LibDDO
       DDO.Instance.Notify(error);
     }
 
+    public override void OnString(int pid, string msg)
+    {
+      DDO.Instance.OtherString(msg);
+    }
+
     public override void Exiting()
     {
     }

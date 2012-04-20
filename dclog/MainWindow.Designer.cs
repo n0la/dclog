@@ -47,15 +47,15 @@ namespace dclog
         private void InitializeComponent()
         {
           this.components = new System.ComponentModel.Container();
-          System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-          System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-          System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-          System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-          System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-          System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-          System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Damage received / blocked");
-          System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Damage received by type");
-          System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Damage received by monster");
+          System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+          System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+          System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+          System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+          System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+          System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+          System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Damage received / blocked");
+          System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Damage received by type");
+          System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Damage received by monster");
           this.mainmenu = new System.Windows.Forms.MenuStrip();
           this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.attach = new System.Windows.Forms.ToolStripMenuItem();
@@ -89,6 +89,8 @@ namespace dclog
           this.feedFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
           this.tankmeter = new System.Windows.Forms.TreeView();
+          this.tabPage5 = new System.Windows.Forms.TabPage();
+          this.addstrings = new System.Windows.Forms.TextBox();
           this.mainmenu.SuspendLayout();
           this.maintabs.SuspendLayout();
           this.tabPage1.SuspendLayout();
@@ -101,6 +103,7 @@ namespace dclog
           this.tableLayoutPanel2.SuspendLayout();
           ((System.ComponentModel.ISupportInitialize)(this.tankchart)).BeginInit();
           this.tableLayoutPanel3.SuspendLayout();
+          this.tabPage5.SuspendLayout();
           this.SuspendLayout();
           // 
           // mainmenu
@@ -178,6 +181,7 @@ namespace dclog
           // maintabs
           // 
           this.maintabs.Controls.Add(this.tabPage1);
+          this.maintabs.Controls.Add(this.tabPage5);
           this.maintabs.Controls.Add(this.tabPage2);
           this.maintabs.Controls.Add(this.tabPage3);
           this.maintabs.Controls.Add(this.tabPage4);
@@ -328,20 +332,20 @@ namespace dclog
           // 
           // dpschart
           // 
-          chartArea1.AxisX.Title = "Seconds";
-          chartArea1.AxisY.Title = "DPS";
-          chartArea1.Name = "ChartArea1";
-          this.dpschart.ChartAreas.Add(chartArea1);
+          chartArea5.AxisX.Title = "Seconds";
+          chartArea5.AxisY.Title = "DPS";
+          chartArea5.Name = "ChartArea1";
+          this.dpschart.ChartAreas.Add(chartArea5);
           this.dpschart.Dock = System.Windows.Forms.DockStyle.Fill;
-          legend1.Name = "Legend1";
-          this.dpschart.Legends.Add(legend1);
+          legend5.Name = "Legend1";
+          this.dpschart.Legends.Add(legend5);
           this.dpschart.Location = new System.Drawing.Point(3, 113);
           this.dpschart.Name = "dpschart";
-          series1.ChartArea = "ChartArea1";
-          series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-          series1.Legend = "Legend1";
-          series1.Name = "DPS";
-          this.dpschart.Series.Add(series1);
+          series5.ChartArea = "ChartArea1";
+          series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+          series5.Legend = "Legend1";
+          series5.Name = "DPS";
+          this.dpschart.Series.Add(series5);
           this.dpschart.Size = new System.Drawing.Size(863, 315);
           this.dpschart.TabIndex = 4;
           this.dpschart.Text = "Single Target DPS";
@@ -373,19 +377,19 @@ namespace dclog
           // 
           // tankchart
           // 
-          chartArea2.Name = "ChartArea1";
-          this.tankchart.ChartAreas.Add(chartArea2);
+          chartArea6.Name = "ChartArea1";
+          this.tankchart.ChartAreas.Add(chartArea6);
           this.tankchart.Dock = System.Windows.Forms.DockStyle.Fill;
-          legend2.Name = "Legend1";
-          this.tankchart.Legends.Add(legend2);
+          legend6.Name = "Legend1";
+          this.tankchart.Legends.Add(legend6);
           this.tankchart.Location = new System.Drawing.Point(203, 3);
           this.tankchart.Name = "tankchart";
-          series2.ChartArea = "ChartArea1";
-          series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie;
-          series2.Legend = "Legend1";
-          series2.Name = "Series1";
-          series2.SmartLabelStyle.AllowOutsidePlotArea = System.Windows.Forms.DataVisualization.Charting.LabelOutsidePlotAreaStyle.No;
-          this.tankchart.Series.Add(series2);
+          series6.ChartArea = "ChartArea1";
+          series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie;
+          series6.Legend = "Legend1";
+          series6.Name = "Series1";
+          series6.SmartLabelStyle.AllowOutsidePlotArea = System.Windows.Forms.DataVisualization.Charting.LabelOutsidePlotAreaStyle.No;
+          this.tankchart.Series.Add(series6);
           this.tankchart.Size = new System.Drawing.Size(663, 425);
           this.tankchart.TabIndex = 1;
           this.tankchart.Text = "Tank Chart";
@@ -445,21 +449,44 @@ namespace dclog
           this.tankmeter.Dock = System.Windows.Forms.DockStyle.Fill;
           this.tankmeter.Location = new System.Drawing.Point(3, 3);
           this.tankmeter.Name = "tankmeter";
-          treeNode1.Name = "simple";
-          treeNode1.Tag = "simple";
-          treeNode1.Text = "Damage received / blocked";
-          treeNode2.Name = "type";
-          treeNode2.Tag = "type";
-          treeNode2.Text = "Damage received by type";
-          treeNode3.Name = "monster";
-          treeNode3.Tag = "monster";
-          treeNode3.Text = "Damage received by monster";
+          treeNode7.Name = "simple";
+          treeNode7.Tag = "simple";
+          treeNode7.Text = "Damage received / blocked";
+          treeNode8.Name = "type";
+          treeNode8.Tag = "type";
+          treeNode8.Text = "Damage received by type";
+          treeNode9.Name = "monster";
+          treeNode9.Tag = "monster";
+          treeNode9.Text = "Damage received by monster";
           this.tankmeter.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3});
+            treeNode7,
+            treeNode8,
+            treeNode9});
           this.tankmeter.Size = new System.Drawing.Size(188, 384);
           this.tankmeter.TabIndex = 3;
+          // 
+          // tabPage5
+          // 
+          this.tabPage5.Controls.Add(this.addstrings);
+          this.tabPage5.Location = new System.Drawing.Point(4, 22);
+          this.tabPage5.Name = "tabPage5";
+          this.tabPage5.Size = new System.Drawing.Size(869, 431);
+          this.tabPage5.TabIndex = 4;
+          this.tabPage5.Text = "Additional strings";
+          this.tabPage5.UseVisualStyleBackColor = true;
+          // 
+          // addstrings
+          // 
+          this.addstrings.Dock = System.Windows.Forms.DockStyle.Fill;
+          this.addstrings.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+          this.addstrings.Location = new System.Drawing.Point(0, 0);
+          this.addstrings.MaxLength = 650000;
+          this.addstrings.Multiline = true;
+          this.addstrings.Name = "addstrings";
+          this.addstrings.ReadOnly = true;
+          this.addstrings.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+          this.addstrings.Size = new System.Drawing.Size(869, 431);
+          this.addstrings.TabIndex = 0;
           // 
           // MainWindow
           // 
@@ -488,6 +515,8 @@ namespace dclog
           this.tableLayoutPanel2.ResumeLayout(false);
           ((System.ComponentModel.ISupportInitialize)(this.tankchart)).EndInit();
           this.tableLayoutPanel3.ResumeLayout(false);
+          this.tabPage5.ResumeLayout(false);
+          this.tabPage5.PerformLayout();
           this.ResumeLayout(false);
           this.PerformLayout();
 
@@ -528,6 +557,8 @@ namespace dclog
         private System.Windows.Forms.ToolStripMenuItem feedFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem feedTextToolStripMenuItem;
         private System.Windows.Forms.TreeView tankmeter;
+        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.TextBox addstrings;
     }
 }
 

@@ -35,12 +35,15 @@ namespace LibDDO
     private string channelname = null;
     private CombatLog combatlog = new CombatLog();
     private List<ICombatLogListener> listeners = new List<ICombatLogListener>();
+    private StringBuilder strings = new StringBuilder();
 
     public delegate void DDONotifyDelegate(DDO sender, string message);
     public delegate void DDOOnCombatLogMessageDelegate(DDO sender, CombatLogMessage message);
+    public delegate void DDOOnStringDelegate(DDO sender, string str);
 
     public event DDONotifyDelegate OnNotify;
     public event DDOOnCombatLogMessageDelegate OnCombatLogMessage;
+    public event DDOOnStringDelegate OnString;
 
     public void Notify(string message)
     {
@@ -49,6 +52,12 @@ namespace LibDDO
 
     private DDO()
     {
+    }
+
+    public void OtherString(string msg)
+    {
+      strings.AppendLine(msg);
+      Helper.RaiseEventOnUIThread(OnString, new object[] { this, msg });
     }
 
     public CombatLog CombatLog 

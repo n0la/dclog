@@ -69,6 +69,10 @@ namespace DDOHook
                 str = combatlog.Replace(str, "(Combat) ");
                 iface.OnNewCombatLog(me, str);
               }
+              else
+              {
+                iface.OnString(me, str);
+              }
             }
 
           }

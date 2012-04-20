@@ -43,5 +43,9 @@ namespace DDOHook
     public virtual void Exiting()
     {
     }
+
+    public virtual void OnString(int pid, string msg)
+    {
+    }
   }
 }

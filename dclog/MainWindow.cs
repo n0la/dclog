@@ -50,6 +50,7 @@ namespace dclog
       mainlogger.OnNewLog += new Logger.DOnNewLog(mainlogger_OnNewLog);
       DDO.Instance.OnNotify += new DDO.DDONotifyDelegate(Instance_OnNotify);
       DDO.Instance.OnCombatLogMessage += new DDO.DDOOnCombatLogMessageDelegate(Instance_OnCombatLogMessage);
+      DDO.Instance.OnString += new DDO.DDOOnStringDelegate(Instance_OnString);
       DDO.Instance.RegisterListener(singletarget);
       singletarget.Ticked += new DPSMeterTickedDelegate(singletarget_Ticked);
       singletarget.StateChanged += new DPSMeterStateChangedDelegate(singletarget_StateChanged);
@@ -57,6 +58,12 @@ namespace dclog
       DDO.Instance.RegisterListener(stm);
       DDO.Instance.RegisterListener(tmb);
       DDO.Instance.RegisterListener(tmt);
+    }
+
+    void Instance_OnString(DDO sender, string str)
+    {
+      addstrings.AppendText(str + "\r\n");
+      addstrings.SelectionStart += str.Length;
     }
 
     private void attach_Click(object sender, EventArgs e)
