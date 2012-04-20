@@ -1,0 +1,7 @@
+(Advancement): Adventure Completed
+
+You receive 20,678 XP.
+(Advancement): Objective Completed! 788 XP.
+(Advancement): Your experience point bonus effect gave you 1,161 bonus experience points!
+(Advancement): Adventure Completed
+You receive 12,776 XP.
