@@ -25,34 +25,22 @@ namespace LibDDO.Combat
 {
   public enum DamageType : int
   {
-    [StringValue("Unkown")]
     Unknown = 0,
-    [StringValue("Slashing")]
     Slashing,
-    [StringValue("Piercing")]
     Piercing,
-    [StringValue("Bludgeoning")]
     Bludgeoning,
-    [StringValue("Acid")]
     Acid,
-    [StringValue("Fire")]
     Fire,
-    [StringValue("Good")]
     Good,
-    [StringValue("Cold")]
     Cold,
-    [StringValue("Shock")]
     Shock,
-    [StringValue("Chaotic")]
     Chaotic,
-    [StringValue("Sonic")]
     Sonic,
-    [StringValue("Force")]
     Force,
-    [StringValue("Evil")]
     Evil,
-    [StringValue("Lawful")]
     Lawful,
+    Positive,
+    Negative
   }
 
   public class Damage

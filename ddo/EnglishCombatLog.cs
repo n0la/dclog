@@ -52,6 +52,8 @@ namespace LibDDO.Combat
         case "force": return DamageType.Force;
         case "evil": return DamageType.Evil;
         case "lawful": return DamageType.Lawful;
+        case "negative": return DamageType.Negative;
+        case "positive": return DamageType.Positive;
         // Default: Unknown
         default: return DamageType.Unknown;
       }
@@ -70,7 +72,9 @@ namespace LibDDO.Combat
         case DamageType.Force: return "force";
         case DamageType.Good: return "good";
         case DamageType.Lawful: return "lawful";
+        case DamageType.Negative: return "negative";
         case DamageType.Piercing: return "pierce";
+        case DamageType.Positive: return "positive";
         case DamageType.Shock: return "shock";
         case DamageType.Slashing: return "slash";
         case DamageType.Sonic: return "sonic";        

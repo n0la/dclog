@@ -1,0 +1,10 @@
+(Combat) Troll Shaman's inflict serious wounds hit you for 10 points of negative damage.
+(Combat) Troll Shaman's inflict serious wounds hit you for 12 points of negative damage.
+(Combat) Troll Shaman's inflict serious wounds hit you for 19 points of negative damage.
+(Combat) Troll Shaman's inflict light wounds hit you for 7 points of negative damage.
+(Combat) Troll Shaman's inflict light wounds hit you for 3 points of negative damage.
+(Combat) Troll Shaman's inflict light wounds hit you for 6 points of negative damage.
+(Combat) Troll Shaman hit you for 22 points of cold damage.
+(Combat) Troll Shaman hit you for 10 points of bludgeon damage.
+(Combat) Troll Shaman hit you for a total of 4 points of bludgeon damage after 2 were blocked by your damage reduction.
+
