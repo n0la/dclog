@@ -22,28 +22,63 @@ using System.Text;
 
 namespace LibDDO.Combat.Tanking
 {
+  public class MonsterDamage : Dictionary<string, Damage>
+  {
+    /// <summary>
+    /// Creates an entry for the ability "ability" if it does not exist.
+    /// </summary>
+    /// <param name="ability"></param>
+    public void Create(string ability)
+    {
+      if (!this.ContainsKey(ability))
+      {
+        this[ability] = new Damage();
+      }
+    }
+  }
+
   /// <summary>
   /// Gives detailed information of damage received stored by the monster
   /// that hit you.
+  /// **TODO** The overall design of this tankmeter is lacking. It, for example, IS-A SimpleTankMeter per
+  /// monster type. This should be fixed, and properly designed.
   /// </summary>
   public class TankMeterByMonster : ITankMeter
   {
-    private Dictionary<string, Damage> dmg = new Dictionary<string, Damage>();
+    // While we can keep just one reference, and calculate ''summary'' out of ''dmg'', this saves
+    // execution time. And at the time of writing, executing speed took precedence over memory used.
+    private Dictionary<string, MonsterDamage> dmg = new Dictionary<string, MonsterDamage>();
+    private Dictionary<string, Damage> summary = new Dictionary<string, Damage>();
     
     public void OnCombatLog(CombatLogMessage msg)
     {
       if (msg.Type == CombatLogType.DamageTaken)
       {
         string str = msg.Damage.Source;
-        if (!dmg.ContainsKey(str))
-        { // add reference
-          dmg[str] = new Damage();
+        string ability = msg.Damage.SourceAbility;
+
+        if (ability == "")
+        { // **TODO** i18n required
+          ability = "default";
         }
 
-        dmg[str] += msg.Damage;
+        if (!dmg.ContainsKey(str))
+        { // add reference
+          dmg[str] = new MonsterDamage();          
+        }
+        if (!summary.ContainsKey(str))
+        { // Add if it doesn't exist.
+          summary[str] = new Damage();
+        }
+
+        dmg[str].Create(ability);
+        dmg[str][ability] += msg.Damage;
+
+        summary[str] += msg.Damage;
       }
     }
 
-    public Dictionary<string, Damage> DamageValues { get { return dmg; } } 
+    public Dictionary<string, MonsterDamage> DamageValues { get { return dmg; } }
+    public Dictionary<string, Damage> Summary { get { return summary; } }
   }
 }

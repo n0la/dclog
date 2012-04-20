@@ -61,9 +61,10 @@ namespace LibDDO.Combat
     private uint blocked = 0;
     private string blockedby = "";
     private string source = "";
+    private string sourceability = "";
     private string target = "";
+    private string targetability = "";
     private DamageType type = DamageType.Unknown;
-
     public static readonly string Player = "player";
 
     public Damage()
@@ -110,11 +111,25 @@ namespace LibDDO.Combat
     public string Source
     {
       get { return source; }
+      set { source = value; }
     }
 
     public string Target
     {
       get { return target; }
+      set { target = value; }
+    }
+
+    public string SourceAbility
+    {
+      get { return sourceability; }
+      set { sourceability = value; }
+    }
+
+    public string TargetAbility
+    {
+      get { return targetability; }
+      set { targetability = value; }
     }
 
     public DamageType Type

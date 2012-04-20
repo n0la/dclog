@@ -25,6 +25,40 @@ namespace LibDDO.Combat
 {
   public interface ILanguageParser
   {
+    /// <summary>
+    /// Parse the given combat log message and fill the structure.
+    /// </summary>
+    /// <param name="msg">Message to parse.</param>
+    /// <returns>If the message was successfuly parsed or not.</returns>
     bool Parse(CombatLogMessage msg);
+
+    /// <summary>
+    /// Convert the given language string to a damage type. String should is as it appears
+    /// in the combat log.
+    /// </summary>
+    /// <param name="t">String denoting a damage type.</param>
+    /// <returns></returns>
+    DamageType StringToType(string t);
+
+    /// <summary>
+    /// Convert the given damage type to the string representing it. String should be as it
+    /// appears in the combat log.
+    /// </summary>
+    /// <param name="t"></param>
+    /// <returns></returns>
+    string TypeToString(DamageType t);
+
+    /// <summary>
+    /// Given a string denoting a target (either a mob or the player), split the ability used
+    /// from the user of the ability. Example:
+    ///  input = Troll Shaman's inflict serious wounds
+    /// End result:
+    ///  return = true
+    ///  damage.{Target,Source} = Troll Shaman
+    ///  damage.{TargetAbility,SourceAbility} = inflict serious wounds
+    /// </summary>
+    /// <param name="damage"></param>
+    /// <returns></returns>
+    bool SplitTargetAbility(Damage damage);
   }
 }

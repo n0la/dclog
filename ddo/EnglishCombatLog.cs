@@ -26,13 +26,13 @@ namespace LibDDO.Combat
 {
   public class EnglishCombatLog : ILanguageParser
   {
-    private static Regex damagedone = new Regex(@"You hit (.*?) for (\d+) point[s]{0,1} of (.*?)damage\.");
-    private static Regex damagedonedr = new Regex(@"You hit (.*?) for (\d+) point[s]{0,1} of (.*?) damage after (\d+) .*?blocked by (.*?)damage reduction\.");
-    private static Regex killed = new Regex(@"You killed (.*?)\.");
-    private static Regex damagervd = new Regex(@"(.*?) hit you for a total of (\d+) point[s]{0,1} of (.*?)damage\.");
-    private static Regex damagervddr = new Regex(@"(.*?) hit you for a total of (\d+) point[s]{0,1} of (.*?)damage after (\d+) .*?blocked by (.*?)damage reduction\.");
-    private static Regex damageno = new Regex(@"(.*?) hit you but did no damage\; (\d+) point[s]{0,1} of damage were blocked by (.*?)\.");
-    private static Regex damage = new Regex(@"(.*?) hit you for (\d+) point[s]{0,1} of (.*?) damage\.");
+    private static Regex damagedone = new Regex(@"You hit (.*?) for (\d+) point[s]{0,1} of (.*?)damage\.", RegexOptions.Compiled);
+    private static Regex damagedonedr = new Regex(@"You hit (.*?) for (\d+) point[s]{0,1} of (.*?) damage after (\d+) .*?blocked by (.*?)damage reduction\.", RegexOptions.Compiled);
+    private static Regex killed = new Regex(@"You killed (.*?)\.", RegexOptions.Compiled);
+    private static Regex damagervd = new Regex(@"(.*?) hit you for a total of (\d+) point[s]{0,1} of (.*?)damage\.", RegexOptions.Compiled);
+    private static Regex damagervddr = new Regex(@"(.*?) hit you for a total of (\d+) point[s]{0,1} of (.*?)damage after (\d+) .*?blocked by (.*?)damage reduction\.", RegexOptions.Compiled);
+    private static Regex damageno = new Regex(@"(.*?) hit you but did no damage\; (\d+) point[s]{0,1} of damage were blocked by (.*?)\.", RegexOptions.Compiled);
+    private static Regex damage = new Regex(@"(.*?) hit you for (\d+) point[s]{0,1} of (.*?) damage\.", RegexOptions.Compiled);
 
     public DamageType StringToType(string t)
     {
@@ -54,6 +54,28 @@ namespace LibDDO.Combat
         case "lawful": return DamageType.Lawful;
         // Default: Unknown
         default: return DamageType.Unknown;
+      }
+    }
+
+    public string TypeToString(DamageType t)
+    {
+      switch (t)
+      {
+        case DamageType.Acid: return "acid";
+        case DamageType.Bludgeoning: return "bludgeon";
+        case DamageType.Chaotic: return "chaotic";
+        case DamageType.Cold: return "cold";
+        case DamageType.Evil: return "evil";
+        case DamageType.Fire: return "fire";
+        case DamageType.Force: return "force";
+        case DamageType.Good: return "good";
+        case DamageType.Lawful: return "lawful";
+        case DamageType.Piercing: return "pierce";
+        case DamageType.Shock: return "shock";
+        case DamageType.Slashing: return "slash";
+        case DamageType.Sonic: return "sonic";        
+        case DamageType.Unknown: return "unknown";
+        default: return "unknown";
       }
     }
 
@@ -85,7 +107,8 @@ namespace LibDDO.Combat
       }
 
       msg.State = CombatLogMessageState.Parsed;
-      msg.Damage = new Damage(points, blocked, blockedby, Damage.Player, target, StringToType(type));      
+      msg.Damage = new Damage(points, blocked, blockedby, Damage.Player, target, StringToType(type));
+      SplitTargetAbility(msg.Damage);
     }
 
     /// <summary>
@@ -140,6 +163,7 @@ namespace LibDDO.Combat
 
       msg.State = CombatLogMessageState.Parsed;
       msg.Damage = new Damage(points, blocked, blockedby, source, Damage.Player, StringToType(type));
+      SplitTargetAbility(msg.Damage);
     }
 
     public bool Parse(CombatLogMessage msg)
@@ -178,6 +202,46 @@ namespace LibDDO.Combat
         msg.State = CombatLogMessageState.Parsed;
       }
       return recognised;
+    }
+
+
+    public bool SplitTargetAbility(Damage damage)
+    {
+      bool result = false;
+      int idx = 0;
+      string target, targetability;
+      string source, sourceability;
+      
+      if ( (idx = damage.Target.IndexOf("'s")) != -1 ) {
+        target = damage.Target.Substring(0, idx);
+        targetability = damage.Target.Substring(idx + 2).Trim();
+        if (target != "")
+        {
+          damage.Target = target;
+        }
+        if (targetability != "")
+        {
+          damage.TargetAbility = target;
+        }
+        result = true;
+      }
+
+      if ((idx = damage.Source.IndexOf("'s")) != -1)
+      {
+        source = damage.Source.Substring(0, idx);
+        sourceability = damage.Source.Substring(idx + 2).Trim();
+        if (source != "")
+        {
+          damage.Source = source;
+        }
+        if (sourceability != "")
+        {
+          damage.SourceAbility = sourceability;
+        }
+        result = true;
+      }
+
+      return result;
     }
   }
 }

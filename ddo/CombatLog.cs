@@ -38,6 +38,11 @@ namespace LibDDO.Combat
       parser = p;
     }
 
+    public ILanguageParser Parser
+    {
+      get { return parser; }
+    }
+
     public List<CombatLogMessage> Messages
     {
       get { return combatlog; }
