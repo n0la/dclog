@@ -31,7 +31,7 @@ namespace DDOHook
     HookInterface iface;
     LocalHook wcsncpyHook;
     Stack<string> stringqueue = new Stack<string>();
-    private static Regex combatlog = new Regex(@"^Combat.{1}\):.{2}");
+    private static Regex combatlog = new Regex(@"^Combat.{1}\):.{2}", RegexOptions.Compiled);
 
     public DDOHook(RemoteHooking.IContext context, String channel)
     {
