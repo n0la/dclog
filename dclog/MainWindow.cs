@@ -39,9 +39,6 @@ namespace dclog
   public partial class MainWindow : Form
   {
     private Logger mainlogger = new Logger();
-    private SimpleTankMeter stm = new SimpleTankMeter();
-    private TankMeterByMonster tmb = new TankMeterByMonster();
-    private TankMeterByType tmt = new TankMeterByType();
     private Plugins plugins = new Plugins();
 
     public MainWindow()
@@ -53,16 +50,22 @@ namespace dclog
       DDO.Instance.OnCombatLogMessage += new DDO.DDOOnCombatLogMessageDelegate(Instance_OnCombatLogMessage);
       plugins.PluginLoaded += new Plugins.PluginLoadedDelegate(plugins_PluginLoaded);
       plugins.AssemblyLoaded += new Plugins.AssemblyLoadedDelegate(plugins_AssemblyLoaded);
+      plugins.PluginIncompatible += new Plugins.PluginIncompatibleDelegate(plugins_PluginIncompatible);
+    }
 
-      DDO.Instance.RegisterListener(stm);
-      DDO.Instance.RegisterListener(tmb);
-      DDO.Instance.RegisterListener(tmt);
+    void plugins_PluginIncompatible(Plugins sender, IPlugin plugin)
+    {
+      mainlogger.Error(string.Format("Plugin {0} is incompatible with the current interface version {1}",
+        plugin.Name,
+        Plugins.InterfaceVersion.ToString()
+        ));
     }
 
     void plugins_AssemblyLoaded(Plugins who, System.Reflection.Assembly assembly)
     {
-      mainlogger.Info(string.Format("Assembly loaded: {0}, version: {1}",
+      mainlogger.Info(string.Format("Assembly loaded: {0}, trusted: {1}, version: {2}",
         assembly.FullName,
+        (assembly.IsFullyTrusted ? "Yes" : "No"),
         assembly.ImageRuntimeVersion.ToString()
         ));
     }

@@ -28,17 +28,22 @@ namespace DCLog.Plugins
 {
   public class Plugins
   {
+    public static Version InterfaceVersion = new Version(1, 0, 0);
+
     private List<string> pluginpaths = new List<string>();
     private List<IPlugin> loadedplugins = new List<IPlugin>();
     private List<IPlugin> availableplugins = new List<IPlugin>();
     private List<Assembly> assemblies = new List<Assembly>();
     private List<string> blacklist = new List<string>();
+    private Version version = Plugins.InterfaceVersion;
 
-    public delegate void AssemblyLoadedDelegate(Plugins who, Assembly assembly);
-    public delegate void PluginLoadedDelegate(Plugins who, IPlugin plugin);
+    public delegate void AssemblyLoadedDelegate(Plugins sender, Assembly assembly);
+    public delegate void PluginLoadedDelegate(Plugins sender, IPlugin plugin);
+    public delegate void PluginIncompatibleDelegate(Plugins sender, IPlugin plugin);
 
     public event AssemblyLoadedDelegate AssemblyLoaded;
     public event PluginLoadedDelegate PluginLoaded;
+    public event PluginIncompatibleDelegate PluginIncompatible;
 
     public Plugins()
     {
@@ -48,7 +53,18 @@ namespace DCLog.Plugins
     public List<string> PluginPaths { get { return pluginpaths; } }
     public List<IPlugin> LoadedPlugins { get { return loadedplugins; } }
     public List<IPlugin> AvailablePlugins { get { return availableplugins; } }
-    public List<string> BlackList { get { return blacklist; } set { blacklist = value; } }
+    
+    public List<string> BlackList 
+    { 
+      get { return blacklist; } 
+      set { blacklist = value; } 
+    }
+    
+    public Version HostVersion 
+    { 
+      get { return version; } 
+      set { version = value; } 
+    }
 
     public void Initialise(DDO instance)
     {
@@ -92,10 +108,17 @@ namespace DCLog.Plugins
                   if (t.GetInterface("IPlugin") != null)
                   {
                     IPlugin plugin = Activator.CreateInstance(t) as IPlugin;
-                    if (!blacklist.Contains(plugin.Name))
+                    if (!plugin.IsCompatible(version))
+                    { // Not compatible
+                      Helper.RaiseEventOnUIThread(PluginIncompatible, new object[] { this, plugin });
+                    }
+                    else
                     {
-                      Helper.RaiseEventOnUIThread(PluginLoaded, new object[] { this, plugin });
-                      loadedplugins.Add(plugin);                      
+                      if (!blacklist.Contains(plugin.Name))
+                      {
+                        Helper.RaiseEventOnUIThread(PluginLoaded, new object[] { this, plugin });
+                        loadedplugins.Add(plugin);
+                      }
                     }
                     availableplugins.Add(plugin);
                     ++count;

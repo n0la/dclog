@@ -51,6 +51,19 @@ namespace dclog
         item.SubItems.Add(p.Name);
         item.SubItems.Add(p.Description);
         item.SubItems.Add(p.Version.ToString());
+        item.ToolTipText = String.Format("Name: {0}\r\nDescription: {1}\r\nVersion: {2}\r\nAuthor: {3}\r\nWebsite: {4}",
+          p.Name,
+          p.Description,
+          p.Version.ToString(),
+          p.Author,
+          p.Website
+          );
+
+        // If the module is out of date, it gets a red background.
+        if (!p.IsCompatible(Plugins.InterfaceVersion))
+        { // mhmhm tomatoes.
+          item.BackColor = Color.Tomato;
+        }
 
         item.Checked = !IsBlackListed(p.Name);
 

@@ -58,6 +58,7 @@ namespace DCLog.DPSPlugin
 
     public bool IsCompatible(Version v)
     {
+      // **TODO** actual version check.
       return true;
     }
 

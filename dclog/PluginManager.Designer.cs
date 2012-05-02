@@ -36,6 +36,7 @@
       this.plist = new System.Windows.Forms.ListView();
       this.okay = new System.Windows.Forms.Button();
       this.cancel = new System.Windows.Forms.Button();
+      this.label2 = new System.Windows.Forms.Label();
       columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       Name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -108,11 +109,21 @@
       this.cancel.UseVisualStyleBackColor = true;
       this.cancel.Click += new System.EventHandler(this.cancel_Click);
       // 
+      // label2
+      // 
+      this.label2.AutoSize = true;
+      this.label2.Location = new System.Drawing.Point(16, 236);
+      this.label2.Name = "label2";
+      this.label2.Size = new System.Drawing.Size(130, 13);
+      this.label2.TabIndex = 4;
+      this.label2.Text = "red = Plugin is out of date.";
+      // 
       // PluginManager
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(435, 274);
+      this.Controls.Add(this.label2);
       this.Controls.Add(this.cancel);
       this.Controls.Add(this.okay);
       this.Controls.Add(this.plist);
@@ -124,6 +135,7 @@
       this.Text = "Plugins";
       this.Load += new System.EventHandler(this.PluginManager_Load);
       this.ResumeLayout(false);
+      this.PerformLayout();
 
     }
 
@@ -133,5 +145,6 @@
     private System.Windows.Forms.ListView plist;
     private System.Windows.Forms.Button okay;
     private System.Windows.Forms.Button cancel;
+    private System.Windows.Forms.Label label2;
   }
 }
