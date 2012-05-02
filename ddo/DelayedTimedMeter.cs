@@ -34,6 +34,13 @@ namespace LibDDO.Combat.DPS
   public delegate void DPSMeterTickedDelegate(DelayedTimedMeter meter);
   public delegate void DPSMeterStateChangedDelegate(DelayedTimedMeter meter, MeterState ny);
 
+  /// <summary>
+  /// This base class implements a DPS meter that calculates DPS over time at specific intervals. 
+  /// Once the timer is started, calculation is delayed until the base class specifically starts the
+  /// the calculation by setting its state from Waiting to Running. This allows to wait for a specific
+  /// message before starting the calculation (i.e. wait until the target is first hit before starting
+  /// the measurement).
+  /// </summary>
   public class DelayedTimedMeter : IDPSMeter
   {
     public event DPSMeterTickedDelegate Ticked;
@@ -82,10 +89,18 @@ namespace LibDDO.Combat.DPS
       State = MeterState.Stopped;
     }
 
+    /// <summary>
+    /// This should be overriden by a base class.
+    /// </summary>
+    /// <param name="msg"></param>
     public virtual void OnCombatLog(CombatLogMessage msg)
     {
     }
 
+    /// <summary>
+    /// This should be overriden by a base class, and must return the result
+    /// at the time of calling.
+    /// </summary>
     public virtual double Result { get { return 0.0; } }
 
     public uint SecondsPassed

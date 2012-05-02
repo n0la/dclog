@@ -51,16 +51,27 @@ namespace LibDDO
     {
     }
 
+    /// <summary>
+    /// Entire combat log acquired so far.
+    /// </summary>
     public CombatLog CombatLog 
     { 
       get { return combatlog; } 
     }
 
+    /// <summary>
+    /// Register the given combat log listener to receive a copy of incoming combat log messages.
+    /// </summary>
+    /// <param name="meter"></param>
     public void RegisterListener(ICombatLogListener meter)
     {
       listeners.Add(meter);
     }
 
+    /// <summary>
+    /// Remove a given listener from the list.
+    /// </summary>
+    /// <param name="meter"></param>
     public void DeregisterListener(ICombatLogListener meter)
     {
       listeners.Remove(meter);
@@ -74,6 +85,10 @@ namespace LibDDO
       }
     }
 
+    /// <summary>
+    /// Manually add a combat log message by string.
+    /// </summary>
+    /// <param name="msg">Combat log message to parse and add.</param>
     public void AddCombatLogMessage(string msg)
     {
       CombatLogMessage e = new CombatLogMessage(msg);

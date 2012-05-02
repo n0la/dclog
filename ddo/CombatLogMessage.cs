@@ -24,21 +24,49 @@ using System.Text;
 
 namespace LibDDO.Combat
 {
+  /// <summary>
+  /// The general type of the combat log.
+  /// </summary>
   public enum CombatLogType : int
   {
+    /// <summary>
+    /// The type is unkown.
+    /// </summary>
     Unknown = 0,
+    /// <summary>
+    /// The player has caused damage to a mob.
+    /// </summary>
     DamageDone,
+    /// <summary>
+    /// A mob has caused damage to the player.
+    /// </summary>
     DamageTaken,
+    /// <summary>
+    /// A mob has been killed.
+    /// </summary>
     TargetKilled,
   }
 
   public enum CombatLogMessageState : int
   {
+    /// <summary>
+    /// The type is unknown.
+    /// </summary>
     Unknown = 0,
+    /// <summary>
+    /// The message was successfully parsed.
+    /// </summary>
     Parsed,
+    /// <summary>
+    /// The message was recognised, but failed to parse properly.
+    /// </summary>
     ParsingError
   }
 
+  /// <summary>
+  /// A single message in the combat log. It can be parsed, if the respective parser has recognised
+  /// the combat log message. Or unparsed and unknown.
+  /// </summary>
   public class CombatLogMessage
   {
     private string message = "";
@@ -70,6 +98,9 @@ namespace LibDDO.Combat
       set { type = value; }
     }
 
+    /// <summary>
+    /// The actual damage inflicted or taken.
+    /// </summary>
     public Damage Damage
     {
       get { return damage; }
@@ -103,6 +134,10 @@ namespace LibDDO.Combat
       get { return timestamp; }
     }
 
+    /// <summary>
+    /// Converts this combat log message to the original string as it appeared in the game.
+    /// </summary>
+    /// <returns>The games representation of the combat log message.</returns>
     public string ToOriginalString()
     {
       if (orig.Length == 0)
@@ -113,6 +148,11 @@ namespace LibDDO.Combat
       return orig.ToString();
     }
 
+    /// <summary>
+    /// Returns the combat log message with additional information, including whether the
+    /// message was successfully parsed or not, and the timestamp when this message occured.
+    /// </summary>
+    /// <returns>String representation of the combat log message.</returns>
     public override string ToString()
     {
       if (b.Length == 0)

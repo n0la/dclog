@@ -25,7 +25,8 @@ using System.Timers;
 namespace LibDDO.Combat.DPS
 {
   /// <summary>
-  /// A simple, timed single target DPS meter.
+  /// A simple, timed single target DPS meter. Only damage done to a specific target are
+  /// recorded and counted. Useful when measuring ones DPS against bosses.
   /// </summary>
   public class SingleTargetMeter : DelayedTimedMeter
   {

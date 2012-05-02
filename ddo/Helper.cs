@@ -24,8 +24,18 @@ using System.ComponentModel;
 
 namespace LibDDO
 {
+  /// <summary>
+  /// Various helper methods.
+  /// </summary>
   public class Helper
   {
+    /// <summary>
+    /// This method calls the given event with the specified parameters either synchronized when the
+    /// target and caller thread are the same, or asynchronized if the target and caller are in 
+    /// different threads.
+    /// </summary>
+    /// <param name="theEvent">The event to be emitted.</param>
+    /// <param name="args">List of parameters passed to the event.</param>
     public static void RaiseEventOnUIThread(Delegate theEvent, object[] args)
     {
       try

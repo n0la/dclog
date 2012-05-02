@@ -22,6 +22,9 @@ using System.Text;
 
 namespace LibDDO.Combat.Tanking
 {
+  /// <summary>
+  /// Common interface description for tank meters.
+  /// </summary>
   public interface ITankMeter : ICombatLogListener
   {
   }

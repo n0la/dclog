@@ -22,6 +22,9 @@ using System.Text;
 
 namespace LibDDO.Combat.Tanking
 {
+  /// <summary>
+  /// A simple tank meter, measuring how much damage was taken and blocked overall.
+  /// </summary>
   public class SimpleTankMeter : ITankMeter
   {
     private uint damagetaken = 0;

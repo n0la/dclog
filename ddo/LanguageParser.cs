@@ -23,6 +23,9 @@ using System.Text;
 
 namespace LibDDO.Combat
 {
+  /// <summary>
+  /// Interface for parsers that parse a log string of the game into Messages.
+  /// </summary>
   public interface ILanguageParser
   {
     /// <summary>

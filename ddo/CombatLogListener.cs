@@ -23,6 +23,9 @@ using System.Text;
 
 namespace LibDDO.Combat
 {
+  /// <summary>
+  /// An interface designed for classes that wish to receive new parsed CombatLogMessages from the main instance.
+  /// </summary>
   public interface ICombatLogListener
   {
     void OnCombatLog(CombatLogMessage msg);

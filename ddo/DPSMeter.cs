@@ -23,6 +23,9 @@ using System.Text;
 
 namespace LibDDO.Combat.DPS
 {
+  /// <summary>
+  /// Base interface for all DPS meters that measure DPS over a specific time period.
+  /// </summary>
   public interface IDPSMeter : ICombatLogListener
   {
     void Start();

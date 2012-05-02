@@ -26,6 +26,9 @@ using LibDDO;
 
 namespace DCLog.Plugins
 {
+  /// <summary>
+  /// Dynamically manages plugins to DCLog.
+  /// </summary>
   public class Plugins
   {
     public static Version InterfaceVersion = new Version(1, 0, 0);
@@ -41,8 +44,19 @@ namespace DCLog.Plugins
     public delegate void PluginLoadedDelegate(Plugins sender, IPlugin plugin);
     public delegate void PluginIncompatibleDelegate(Plugins sender, IPlugin plugin);
 
+    /// <summary>
+    /// Emitted when a new assembly (DLL file) is loaded into the address space.
+    /// </summary>
     public event AssemblyLoadedDelegate AssemblyLoaded;
+
+    /// <summary>
+    /// Emitted when a plugin was successfully loaded.
+    /// </summary>
     public event PluginLoadedDelegate PluginLoaded;
+
+    /// <summary>
+    /// Emitted when a module reported incompability with the host version.
+    /// </summary>
     public event PluginIncompatibleDelegate PluginIncompatible;
 
     public Plugins()
@@ -50,22 +64,45 @@ namespace DCLog.Plugins
       pluginpaths.Add(Application.StartupPath + @"\plugins\");
     }
 
+    /// <summary>
+    /// A list of folders that should be searched when loading modules.
+    /// </summary>
     public List<string> PluginPaths { get { return pluginpaths; } }
+
+    /// <summary>
+    /// A list of loaded modules, that are both compatible with the current version and
+    /// are not black listed.
+    /// </summary>
     public List<IPlugin> LoadedPlugins { get { return loadedplugins; } }
+
+    /// <summary>
+    /// A list of all available plugins, including black listed and incompatible plugins.
+    /// </summary>
     public List<IPlugin> AvailablePlugins { get { return availableplugins; } }
     
+    /// <summary>
+    /// A list of names of modules that are not to be loaded.
+    /// </summary>
     public List<string> BlackList 
     { 
       get { return blacklist; } 
       set { blacklist = value; } 
     }
     
+    /// <summary>
+    /// The version against which compability should be checked. Per default this value
+    /// is the same as Plugins.InterfaceVersion.
+    /// </summary>
     public Version HostVersion 
     { 
       get { return version; } 
       set { version = value; } 
     }
 
+    /// <summary>
+    /// Initialise all loaded plugins.
+    /// </summary>
+    /// <param name="instance">The DDO instance the plugins should base their work on.</param>
     public void Initialise(DDO instance)
     {
       foreach (IPlugin p in loadedplugins)
@@ -73,7 +110,10 @@ namespace DCLog.Plugins
         p.Initialise(instance);
       }
     }
-
+    
+    /// <summary>
+    /// Unload all loaded plugins.
+    /// </summary>
     public void Unload()
     {
       foreach (IPlugin p in loadedplugins)
@@ -81,6 +121,7 @@ namespace DCLog.Plugins
         p.Destroy();
       }
       loadedplugins.Clear();
+      availableplugins.Clear();
       assemblies.Clear();
     }
 

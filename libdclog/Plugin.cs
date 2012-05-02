@@ -23,6 +23,18 @@ using System.Text;
 
 namespace DCLog.Plugins
 {
+  /// <summary>
+  /// Base interface for all plugins to DCLog.
+  /// 
+  /// While a plugin serves one or many custom made controls which are displayed by the main
+  /// application. All actions, sub controls (charts, text boxes, buttons) are to be
+  /// handled by those controls. While a plugin may provide more than one UI control, it is
+  /// generally recommended to have one plugin for one control. Each plugin assembly can provide
+  /// more than one plugin though; i.e. a DPS plugin can provide several different DPS meters.
+  /// 
+  /// It is good design to create and initialise controls upon the first call to the Controls
+  /// property. This way maximum performance of DCLog is ensured.
+  /// </summary>
   public interface IPlugin
   {
     /// <summary>
@@ -59,10 +71,15 @@ namespace DCLog.Plugins
 
     /// <summary>
     /// Is called once to give you the currently active instance of DDO. Use this instance over
-    /// the singleton LibDDO.DDO may be.
+    /// the singleton LibDDO.DDO, as the singleton design is subject to change.
     /// </summary>
     /// <param name="instance"></param>
     void Initialise(LibDDO.DDO instance);
+
+    /// <summary>
+    /// Is called when the plugin is destroyed the main window. Use it to free up resources that
+    /// are otherwise not managed by the garbage collector.
+    /// </summary>
     void Destroy();
 
     /// <summary>

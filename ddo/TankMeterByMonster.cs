@@ -38,8 +38,7 @@ namespace LibDDO.Combat.Tanking
   }
 
   /// <summary>
-  /// Gives detailed information of damage received stored by the monster
-  /// that hit you.
+  /// Gives detailed information of damage received by monsters and their abilities (spells, special attacks, etc.).
   /// **TODO** The overall design of this tankmeter is lacking. It, for example, IS-A SimpleTankMeter per
   /// monster type. This should be fixed, and properly designed.
   /// </summary>
@@ -79,6 +78,10 @@ namespace LibDDO.Combat.Tanking
     }
 
     public Dictionary<string, MonsterDamage> DamageValues { get { return dmg; } }
+
+    /// <summary>
+    /// A cumulative summary of DamageValues provided for convinience.
+    /// </summary>
     public Dictionary<string, Damage> Summary { get { return summary; } }
   }
 }

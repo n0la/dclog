@@ -23,31 +23,51 @@ using System.Text;
 
 namespace LibDDO.Combat
 {
+  /// <summary>
+  /// This class is a list of combat log messages.
+  /// </summary>
   public class CombatLog
   {
     private List<CombatLogMessage> combatlog = new List<CombatLogMessage>();
     private ILanguageParser parser = null;
 
+    /// <summary>
+    /// Constructs a new combat log object with English as the default language.
+    /// </summary>
     public CombatLog()
     {
       parser = new EnglishCombatLog();
     }
 
+    /// <summary>
+    /// Constructs a new combat log with a user defined language.
+    /// </summary>
+    /// <param name="p">Language of the combat log.</param>
     public CombatLog(ILanguageParser p)
     {
       parser = p;
     }
 
+    /// <summary>
+    /// The language parser currently used by this combat log.
+    /// </summary>
     public ILanguageParser Parser
     {
       get { return parser; }
     }
 
+    /// <summary>
+    /// Chronological list of combat log messages.
+    /// </summary>
     public List<CombatLogMessage> Messages
     {
       get { return combatlog; }
     }
 
+    /// <summary>
+    /// Adds and parses a new combat log message.
+    /// </summary>
+    /// <param name="msg">Message to parse and add.</param>
     public void Add(CombatLogMessage msg)
     {
       // Parse the combat log and add it regardless.

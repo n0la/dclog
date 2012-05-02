@@ -23,7 +23,7 @@ using System.Text;
 namespace LibDDO.Combat.Tanking
 {
   /// <summary>
-  /// Gives detailed information of damage received stored by damage type
+  /// Gives detailed information of damage received by damage type (i.e. slashing, fire etc.).
   /// </summary>
   public class TankMeterByType : ITankMeter
   {

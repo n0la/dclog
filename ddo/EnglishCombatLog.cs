@@ -24,6 +24,10 @@ using System.Text.RegularExpressions;
 
 namespace LibDDO.Combat
 {
+  /// <summary>
+  /// This class is responsible for parsing the combat log produced by the English
+  /// game client. It is also responsible for converting damage types from English to the internal type.
+  /// </summary>
   public class EnglishCombatLog : ILanguageParser
   {
     private static Regex damagedone = new Regex(@"You hit (.*?) for (\d+) point[s]{0,1} of (.*?)damage\.", RegexOptions.Compiled);
