@@ -127,6 +127,8 @@ namespace dclog
 
     private void MainWindow_Load(object sender, EventArgs e)
     {
+      // Apply black list from configuration.
+      plugins.BlackList = Configuration.Instance.PluginBlackList;
       plugins.Load();
       plugins.Initialise(DDO.Instance);
       InitialisePlugins();
@@ -246,6 +248,13 @@ namespace dclog
           DDO.Instance.AddCombatLogMessage(s);
         }
       }
+    }
+
+    private void pluginsToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      PluginManager mgr = new PluginManager(plugins);
+
+      mgr.ShowDialog();
     }
   }
 }

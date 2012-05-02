@@ -63,6 +63,8 @@ namespace dclog
           this.applog = new System.Windows.Forms.TextBox();
           this.tabPage2 = new System.Windows.Forms.TabPage();
           this.combatlog = new System.Windows.Forms.TextBox();
+          this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+          this.pluginsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.mainmenu.SuspendLayout();
           this.maintabs.SuspendLayout();
           this.tabPage1.SuspendLayout();
@@ -73,6 +75,7 @@ namespace dclog
           // 
           this.mainmenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
+            this.optionsToolStripMenuItem,
             this.helpToolStripMenuItem});
           this.mainmenu.Location = new System.Drawing.Point(0, 0);
           this.mainmenu.Name = "mainmenu";
@@ -219,6 +222,21 @@ namespace dclog
           this.combatlog.TabIndex = 0;
           this.combatlog.TextChanged += new System.EventHandler(this.combatlog_TextChanged);
           // 
+          // optionsToolStripMenuItem
+          // 
+          this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.pluginsToolStripMenuItem});
+          this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+          this.optionsToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
+          this.optionsToolStripMenuItem.Text = "Options";
+          // 
+          // pluginsToolStripMenuItem
+          // 
+          this.pluginsToolStripMenuItem.Name = "pluginsToolStripMenuItem";
+          this.pluginsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+          this.pluginsToolStripMenuItem.Text = "Plugins";
+          this.pluginsToolStripMenuItem.Click += new System.EventHandler(this.pluginsToolStripMenuItem_Click);
+          // 
           // MainWindow
           // 
           this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -261,6 +279,8 @@ namespace dclog
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem feedFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem feedTextToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pluginsToolStripMenuItem;
     }
 }
 

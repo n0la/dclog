@@ -32,6 +32,7 @@ namespace dclog
   public class CfgContainer
   {
     private string logdirectory = "";
+    private List<String> pluginblacklist = new List<string>();
     private Configuration c;
 
     public CfgContainer()
@@ -61,6 +62,12 @@ namespace dclog
     {
       get { return GetDefault(logdirectory, (c.ConfigPath + @"\logs")); }
       set { logdirectory = value; }
+    }
+
+    public List<string> PluginBlackList
+    {
+      get { return pluginblacklist; }
+      set { pluginblacklist = value; }
     }
   }
 
@@ -151,6 +158,11 @@ namespace dclog
     public string ConfigFile
     {
       get { return configfile; }
+    }
+
+    public List<string> PluginBlackList
+    {
+      get { return container.PluginBlackList; }
     }
 
     public string LogDirectory
