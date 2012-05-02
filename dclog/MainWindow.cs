@@ -32,16 +32,17 @@ using LibDDO;
 using LibDDO.Combat;
 using LibDDO.Combat.DPS;
 using LibDDO.Combat.Tanking;
+using DCLog.Plugins;
 
 namespace dclog
 {
   public partial class MainWindow : Form
   {
     private Logger mainlogger = new Logger();
-    private SingleTargetMeter singletarget = new SingleTargetMeter();
     private SimpleTankMeter stm = new SimpleTankMeter();
     private TankMeterByMonster tmb = new TankMeterByMonster();
     private TankMeterByType tmt = new TankMeterByType();
+    private Plugins plugins = new Plugins();
 
     public MainWindow()
     {
@@ -50,13 +51,28 @@ namespace dclog
       mainlogger.OnNewLog += new Logger.DOnNewLog(mainlogger_OnNewLog);
       DDO.Instance.OnNotify += new DDO.DDONotifyDelegate(Instance_OnNotify);
       DDO.Instance.OnCombatLogMessage += new DDO.DDOOnCombatLogMessageDelegate(Instance_OnCombatLogMessage);
-      DDO.Instance.RegisterListener(singletarget);
-      singletarget.Ticked += new DPSMeterTickedDelegate(singletarget_Ticked);
-      singletarget.StateChanged += new DPSMeterStateChangedDelegate(singletarget_StateChanged);
+      plugins.PluginLoaded += new Plugins.PluginLoadedDelegate(plugins_PluginLoaded);
+      plugins.AssemblyLoaded += new Plugins.AssemblyLoadedDelegate(plugins_AssemblyLoaded);
 
       DDO.Instance.RegisterListener(stm);
       DDO.Instance.RegisterListener(tmb);
       DDO.Instance.RegisterListener(tmt);
+    }
+
+    void plugins_AssemblyLoaded(Plugins who, System.Reflection.Assembly assembly)
+    {
+      mainlogger.Info(string.Format("Assembly loaded: {0}, version: {1}",
+        assembly.FullName,
+        assembly.ImageRuntimeVersion.ToString()
+        ));
+    }
+
+    void plugins_PluginLoaded(Plugins who, IPlugin plugin)
+    {
+      mainlogger.Info(string.Format("Plugin loaded: {0}, version: {1}",
+        plugin.Name,
+        plugin.Version.ToString()
+        ));
     }
 
     private void attach_Click(object sender, EventArgs e)
@@ -111,6 +127,24 @@ namespace dclog
 
     private void MainWindow_Load(object sender, EventArgs e)
     {
+      plugins.Load();
+      plugins.Initialise(DDO.Instance);
+      InitialisePlugins();
+    }
+
+    private void InitialisePlugins()
+    {
+      foreach (IPlugin p in plugins.LoadedPlugins)
+      {
+        List<Control> cs = p.Controls;
+        foreach (Control c in cs)
+        {
+          TabPage pg = new TabPage(p.Name);
+          c.Dock = DockStyle.Fill;
+          pg.Controls.Add(c);
+          maintabs.TabPages.Add(pg);
+        }
+      }
     }
 
     void Instance_OnCombatLogMessage(DDO sender, CombatLogMessage message)
@@ -144,250 +178,6 @@ namespace dclog
       applog.SelectionStart = applog.Text.Length;
       applog.ScrollToCaret();
       //applog.Refresh();
-    }
-
-    private void ststart_Click(object sender, EventArgs e)
-    {
-      if (String.IsNullOrEmpty(sttarget.Text))
-      {
-        return;
-      }
-
-      singletarget.Stop();
-      singletarget.Target = sttarget.Text;
-      singletarget.Start();
-      dpschart.Series[0].Points.Clear();
-    }
-
-    private void ststop_Click(object sender, EventArgs e)
-    {
-      singletarget.Stop();
-    }
-
-    void singletarget_Ticked(DelayedTimedMeter meter)
-    {
-      // Add a point.
-      dpschart.Series[0].Points.AddXY(singletarget.TimePassed.TotalSeconds, singletarget.Result);
-    }
-
-    void singletarget_StateChanged(DelayedTimedMeter meter, MeterState ny)
-    {
-      switch (ny)
-      {
-        case MeterState.Waiting: ststatus.Text = "Waiting..."; ststatus.ForeColor = Color.Orange; break;
-        case MeterState.Stopped: ststatus.Text = "Stopped!"; ststatus.ForeColor = Color.Red; break;
-        case MeterState.Running: ststatus.Text = "Running!"; ststatus.ForeColor = Color.Green; break;
-      }
-    }
-
-    private void tankmeter_SelectedIndexChanged(object sender, EventArgs e)
-    {
-      tankrefresh_Click(sender, e);
-    }
-
-    private DataPoint CreateNamedPoint(string name, double x, double y)
-    {
-      DataPoint pnt = new DataPoint(x, y);
-      pnt.Label = name;
-
-      return pnt;
-    }
-
-    private DataPoint CreateNamedPoint(string name, double value)
-    {
-      DataPoint pnt = new DataPoint(value, value);
-      pnt.Label = value.ToString();
-      pnt.ToolTip = pnt.LegendText = name + ": " + value.ToString();
-
-      return pnt;
-    }
-
-    private void RefreshSimple()
-    {
-      Series cur = tankchart.Series[0];
-      cur.Points.Clear();
-      cur.Points.Add(CreateNamedPoint("Damage taken", stm.DamageTaken));
-      cur.Points.Add(CreateNamedPoint("Damage blocked", stm.DamageBlocked));
-      NoTotal();
-    }
-
-    public TreeNode FindByTag(TreeNode parent, string tag)
-    {
-      for ( int i = 0; i < parent.Nodes.Count; i++ ) 
-      {
-        TreeNode child = parent.Nodes[i];
-        if ((child.Tag as string) == tag)
-        {
-          return child;
-        }
-      }
-      return null;
-    }
-
-    private void AddMonsters()
-    {
-      var nodes = tankmeter.Nodes.Find("monster", false);
-
-      if (nodes.Length == 1)
-      {
-        TreeNode node = nodes[0];
-        // Add new child elements in case they are not there yet.
-        foreach (var p in tmb.DamageValues)
-        {
-          var exists = node.Nodes.Find(p.Key, true);
-          if (exists.Length == 0)
-          {
-            TreeNode ny = new TreeNode(p.Key);
-            TreeNode byattack = new TreeNode("By ability");
-            TreeNode blockratio = new TreeNode("Block ratio");
-
-            ny.Tag = "monster";
-            ny.Name = p.Key;
-
-            byattack.Tag = "monster";
-            byattack.Name = "byability";
-
-            blockratio.Tag = "monster";
-            blockratio.Name = "blockratio";
-
-            ny.Nodes.Add(byattack);
-            ny.Nodes.Add(blockratio);
-
-            node.Nodes.Add(ny);
-          }
-        }
-      }
-    }
-
-    private void RefreshByMonster()
-    {
-      TreeNode node = tankmeter.SelectedNode;
-
-      if (node.Parent == null)
-      { // Parent node selected, show a summary. The summary is provided by TankMeterByMonster
-        Series cur = tankchart.Series[0];
-        cur.Points.Clear();
-
-        foreach (var p in tmb.Summary)
-        {
-          cur.Points.Add(CreateNamedPoint(p.Key, p.Value.Points));
-        }
-        AddTotal();
-      }
-      else if (node.Name == "byability")
-      { // By ability has been selected, display damage by attacks done by the monster.
-        Series cur = tankchart.Series[0];
-        cur.Points.Clear();
-
-        if (!tmb.DamageValues.ContainsKey(node.Parent.Text))
-        { // Error
-          return;
-        }
-
-        MonsterDamage dmg = tmb.DamageValues[node.Parent.Text];
-        foreach (var p in dmg)
-        {
-          cur.Points.Add(CreateNamedPoint(p.Key, p.Value.Points));
-        }
-        AddTotal();
-      }
-      else if (node.Name == "blockratio")
-      { // The taken/blocked ratio for that monster
-        Series cur = tankchart.Series[0];
-        cur.Points.Clear();
-
-        if (!tmb.Summary.ContainsKey(node.Parent.Text))
-        {
-          return;
-        }
-
-        var summary = tmb.Summary[node.Parent.Text];
-        cur.Points.Add(CreateNamedPoint("Damage taken", summary.Points));
-        cur.Points.Add(CreateNamedPoint("Damage blocked", summary.Blocked));
-        NoTotal();
-      }
-    }
-
-    private void RefreshByType()
-    {
-      Series cur = tankchart.Series[0];
-
-      cur.Points.Clear();
-
-      foreach (var p in tmt.DamageValues)
-      {
-        cur.Points.Add(CreateNamedPoint(p.Key.ToString(), p.Value.Points));
-      }
-      AddTotal();      
-    }
-
-    private void NoTotal()
-    {
-      tankchart.Legends[0].CustomItems.Clear();
-    }
-
-    /// <summary>
-    /// Add a "Total #value" as the last data point.
-    /// </summary>
-    /// <param name="points"></param>
-    private void AddTotal()
-    {
-      double total = 0;
-
-      foreach (var p in tankchart.Series[0].Points)
-      {
-        total += p.XValue;
-      }
-
-      LegendItem item = new LegendItem();
-      item.Name = string.Format("Total: {0}", total);
-      item.Color = Color.Pink;
-      item.BorderWidth = 0;
-
-      tankchart.Legends[0].CustomItems.Clear();
-      tankchart.Legends[0].CustomItems.Add(item);
-    }
-
-    /**
-     * Damage received            ~ Entire damage received, show blocked/received ratio
-     * Damage received by type    ~ Entire damage received sorted by type
-     * Damage received by monster ~ Show damage done by monsters, 
-     *                              i.e. which monster has done the most damage?
-     *  o Monster                 ~ TODO
-     *    o By attack             ~ Show damage done by specific attack.
-     *    o By type               ~ Show damage done by monster sorted by type. TODO
-     *    
-     * The three root nodes all have tags. The tags are:
-     *  Damage received: simple
-     *  Damage received by type: type
-     *  Damage received by monster: monster
-     * Child nodes of these should have the same tag for the trigger to work. Each update
-     * method can use the Name property to differentiate the child nodes.
-     * 
-     * **TODO** Find better way for node handling.
-     */
-    private void tankrefresh_Click(object sender, EventArgs e)
-    {
-            // Make sure monsters are added as soon as possible.
-      AddMonsters();
-
-      if (tankmeter.SelectedNode == null)
-      {
-        return;
-      }
-      string selected = tankmeter.SelectedNode.Tag as string;
-
-      switch (selected)
-      {
-        case "simple": RefreshSimple(); break;
-        case "monster": RefreshByMonster(); break;
-        case "type": RefreshByType(); break;
-      }
-    }
-
-    private void tanktimer_Tick(object sender, EventArgs e)
-    {
-      tankrefresh_Click(sender, e);
     }
 
     private void quitToolStripMenuItem_Click(object sender, EventArgs e)

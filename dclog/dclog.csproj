@@ -156,6 +156,10 @@
       <Project>{0044D888-4F31-4BDE-8F81-06277C89D7AB}</Project>
       <Name>ddo</Name>
     </ProjectReference>
+    <ProjectReference Include="..\libdclog\libdclog.csproj">
+      <Project>{0CF48B73-7F73-4CC3-83A4-2DBB248C9EAE}</Project>
+      <Name>libdclog</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
