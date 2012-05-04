@@ -118,11 +118,11 @@ namespace DDOHook
                                  );
 
     static IntPtr wcsncpy_Hooked(IntPtr str1, IntPtr str2, uint size)
-    {
-      DDOHook me = (DDOHook)HookRuntimeInfo.Callback;
+    {      
       try
       {
-        if (size > 4) // Length of Combat
+        DDOHook me = (DDOHook)HookRuntimeInfo.Callback;
+        if (size > 4 && str1 != IntPtr.Zero && str2 != IntPtr.Zero) // Length of Combat
         {
           string str = Marshal.PtrToStringUni(str2);
           lock (me.stringqueue)
@@ -131,9 +131,8 @@ namespace DDOHook
           }
         }
       }
-      catch (Exception e)
+      catch (Exception)
       {
-        me.Error(e);
       }
       return wcsncpy(str1, str2, size);
     }
