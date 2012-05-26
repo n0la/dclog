@@ -47,7 +47,7 @@ namespace dclog
       mainlogger.EnableAll();
       mainlogger.OnNewLog += new Logger.DOnNewLog(mainlogger_OnNewLog);
       DDO.Instance.OnNotify += new DDO.DDONotifyDelegate(Instance_OnNotify);
-      DDO.Instance.OnCombatLogMessage += new DDO.DDOOnCombatLogMessageDelegate(Instance_OnCombatLogMessage);
+      DDO.Instance.OnChatMessage += new DDO.DDOOnChatMessage(Instance_OnChatMessage);
       plugins.PluginLoaded += new Plugins.PluginLoadedDelegate(plugins_PluginLoaded);
       plugins.AssemblyLoaded += new Plugins.AssemblyLoadedDelegate(plugins_AssemblyLoaded);
       plugins.PluginIncompatible += new Plugins.PluginIncompatibleDelegate(plugins_PluginIncompatible);
@@ -152,7 +152,7 @@ namespace dclog
       }
     }
 
-    void Instance_OnCombatLogMessage(DDO sender, CombatLogMessage message)
+    void Instance_OnChatMessage(DDO sender, ChatMessage message)
     {
       StringBuilder msg = new StringBuilder();
 
@@ -222,7 +222,7 @@ namespace dclog
             string line = reader.ReadLine();
             if (line.Length > 0)
             { // Add line to combat log
-              DDO.Instance.AddCombatLogMessage(line);
+              DDO.Instance.AddMessage(line);
             }
           }
         }
@@ -248,7 +248,7 @@ namespace dclog
         // Add lines to combat log
         foreach (string s in dlg.Lines)
         {
-          DDO.Instance.AddCombatLogMessage(s);
+          DDO.Instance.AddMessage(s);
         }
       }
     }

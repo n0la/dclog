@@ -28,7 +28,7 @@ namespace DDOHook
     {
     }
 
-    public virtual void OnNewCombatLog(int pid, string message)
+    public virtual void OnNewMessage(int pid, string message)
     {
     }
 

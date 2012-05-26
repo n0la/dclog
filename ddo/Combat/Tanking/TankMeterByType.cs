@@ -18,16 +18,35 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
-namespace LibDDO.Combat
+namespace LibDDO.Combat.Tanking
 {
   /// <summary>
-  /// An interface designed for classes that wish to receive new parsed CombatLogMessages from the main instance.
+  /// Gives detailed information of damage received by damage type (i.e. slashing, fire etc.).
   /// </summary>
-  public interface ICombatLogListener
+  public class TankMeterByType : ITankMeter
   {
-    void OnCombatLog(CombatLogMessage msg);
+    private Dictionary<DamageType, Damage> dmg = new Dictionary<DamageType, Damage>();
+
+    public void OnChatMessage(ChatMessage c)
+    {
+      if (c.IsCombat)
+      {
+        CombatMessage msg = c as CombatMessage;
+        if (msg.CombatType == CombatLogType.DamageTaken)
+        {
+          DamageType str = msg.Damage.Type;
+          if (!dmg.ContainsKey(str))
+          { // add reference
+            dmg[str] = new Damage();
+          }
+
+          dmg[str] += msg.Damage;
+        }
+      }
+    }
+
+    public Dictionary<DamageType, Damage> DamageValues { get { return dmg; } }
   }
 }

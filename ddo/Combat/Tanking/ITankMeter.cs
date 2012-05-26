@@ -23,23 +23,9 @@ using System.Text;
 namespace LibDDO.Combat.Tanking
 {
   /// <summary>
-  /// A simple tank meter, measuring how much damage was taken and blocked overall.
+  /// Common interface description for tank meters.
   /// </summary>
-  public class SimpleTankMeter : ITankMeter
+  public interface ITankMeter : IChatListener
   {
-    private uint damagetaken = 0;
-    private uint damageblocked = 0;
-
-    public void OnCombatLog(CombatLogMessage msg)
-    {
-      if (msg.Type == CombatLogType.DamageTaken)
-      {
-        damagetaken += msg.Damage.Points;
-        damageblocked += msg.Damage.Blocked;
-      }
-    }
-
-    public uint DamageTaken { get { return damagetaken; } }
-    public uint DamageBlocked { get { return damageblocked; } }
   }
 }

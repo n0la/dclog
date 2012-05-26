@@ -24,55 +24,47 @@ using System.Text;
 namespace LibDDO.Combat
 {
   /// <summary>
-  /// This class is a list of combat log messages.
+  /// This class is a list of chat log messages, and also keeps track
+  /// of other messages seperately.
   /// </summary>
-  public class CombatLog
+  public class ChatLog
   {
-    private List<CombatLogMessage> combatlog = new List<CombatLogMessage>();
-    private ILanguageParser parser = null;
+    private List<CombatMessage> combatlog = new List<CombatMessage>();
+    private List<ChatMessage> chatlog = new List<ChatMessage>();
 
     /// <summary>
-    /// Constructs a new combat log object with English as the default language.
-    /// </summary>
-    public CombatLog()
-    {
-      parser = new EnglishCombatLog();
-    }
-
-    /// <summary>
-    /// Constructs a new combat log with a user defined language.
+    /// Constructs a new chat log with a user defined language.
     /// </summary>
     /// <param name="p">Language of the combat log.</param>
-    public CombatLog(ILanguageParser p)
+    public ChatLog()
     {
-      parser = p;
     }
 
     /// <summary>
-    /// The language parser currently used by this combat log.
+    /// Chronological list of chat log messages.
     /// </summary>
-    public ILanguageParser Parser
+    public List<ChatMessage> Messages
     {
-      get { return parser; }
+      get { return chatlog; }
     }
 
-    /// <summary>
-    /// Chronological list of combat log messages.
-    /// </summary>
-    public List<CombatLogMessage> Messages
+    public List<CombatMessage> CombatLog
     {
       get { return combatlog; }
     }
 
     /// <summary>
-    /// Adds and parses a new combat log message.
+    /// Adds a new chat log message.
     /// </summary>
     /// <param name="msg">Message to parse and add.</param>
-    public void Add(CombatLogMessage msg)
+    public void Add(ChatMessage msg)
     {
-      // Parse the combat log and add it regardless.
-      parser.Parse(msg);
-      combatlog.Add(msg);
+      chatlog.Add(msg);
+      if (msg.IsCombat)
+      {
+        CombatMessage c = msg as CombatMessage;
+        combatlog.Add(c);
+      }
     }
   }
 }

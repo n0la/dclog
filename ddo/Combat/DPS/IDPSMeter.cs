@@ -18,14 +18,20 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
-namespace LibDDO.Combat.Tanking
+namespace LibDDO.Combat.DPS
 {
   /// <summary>
-  /// Common interface description for tank meters.
+  /// Base interface for all DPS meters that measure DPS over a specific time period.
   /// </summary>
-  public interface ITankMeter : ICombatLogListener
+  public interface IDPSMeter : IChatListener
   {
+    void Start();
+    void Stop();
+
+    double Result { get; }
+    TimeSpan TimePassed { get; }
   }
 }

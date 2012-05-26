@@ -29,11 +29,11 @@ namespace LibDDO.Combat
   public interface ILanguageParser
   {
     /// <summary>
-    /// Parse the given combat log message and fill the structure.
+    /// Parse the chat combat log message and fill the structure.
     /// </summary>
     /// <param name="msg">Message to parse.</param>
     /// <returns>If the message was successfuly parsed or not.</returns>
-    bool Parse(CombatLogMessage msg);
+    ChatMessage Parse(ChatMessage msg);
 
     /// <summary>
     /// Convert the given language string to a damage type. String should is as it appears

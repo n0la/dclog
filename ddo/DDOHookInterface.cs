@@ -30,9 +30,9 @@ namespace LibDDO
       DDO.Instance.Notify(string.Format("Hook successfuly initialized in pid {0}", pid));
     }
 
-    public override void OnNewCombatLog(int pid, string message)
+    public override void OnNewMessage(int pid, string message)
     {
-      DDO.Instance.AddCombatLogMessage(message);
+      DDO.Instance.AddMessage(message);
     }
 
     public override void OnLog(string msg)

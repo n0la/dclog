@@ -18,28 +18,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Text;
 
 namespace LibDDO
 {
-  public class StringValue : Attribute
+  public interface IChatListener
   {
-    private string value = "";
-    private CultureInfo language = CultureInfo.CreateSpecificCulture("en-GB");
-
-    public StringValue(string value)
-    {
-      this.value = value;
-    }
-
-    public StringValue(string value, CultureInfo language)
-    {
-      this.value = value;
-      this.language = language;
-    }
-
-    public CultureInfo Language { get { return language; } }
-    public string Value { get { return value; } }
+    void OnChatMessage(ChatMessage msg);
   }
 }

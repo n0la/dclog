@@ -33,14 +33,18 @@ namespace LibDDO
   {
     private static DDO instance = new DDO();
     private string channelname = null;
-    private CombatLog combatlog = new CombatLog();
-    private List<ICombatLogListener> listeners = new List<ICombatLogListener>();
+
+    private ChatLog chatlog = new ChatLog();
+    private List<IChatListener> listeners = new List<IChatListener>();
 
     public delegate void DDONotifyDelegate(DDO sender, string message);
-    public delegate void DDOOnCombatLogMessageDelegate(DDO sender, CombatLogMessage message);
+    public delegate void DDOOnChatMessage(DDO sender, ChatMessage message);
 
     public event DDONotifyDelegate OnNotify;
-    public event DDOOnCombatLogMessageDelegate OnCombatLogMessage;
+    public event DDOOnChatMessage OnChatMessage;
+
+    // The entire DDO instance is one language.
+    private ILanguageParser parser = new EnglishParser();
 
     public void Notify(string message)
     {
@@ -52,18 +56,18 @@ namespace LibDDO
     }
 
     /// <summary>
-    /// Entire combat log acquired so far.
+    /// Log of all messages.
     /// </summary>
-    public CombatLog CombatLog 
-    { 
-      get { return combatlog; } 
+    public ChatLog ChatLog
+    {
+      get { return chatlog; }
     }
 
     /// <summary>
     /// Register the given combat log listener to receive a copy of incoming combat log messages.
     /// </summary>
     /// <param name="meter"></param>
-    public void RegisterListener(ICombatLogListener meter)
+    public void RegisterListener(IChatListener meter)
     {
       listeners.Add(meter);
     }
@@ -72,16 +76,16 @@ namespace LibDDO
     /// Remove a given listener from the list.
     /// </summary>
     /// <param name="meter"></param>
-    public void DeregisterListener(ICombatLogListener meter)
+    public void DeregisterListener(IChatListener meter)
     {
       listeners.Remove(meter);
     }
 
-    private void HandleMeters(CombatLogMessage msg)
+    private void HandleMeters(ChatMessage msg)
     {
-      foreach (ICombatLogListener m in listeners)
+      foreach (IChatListener m in listeners)
       {
-        m.OnCombatLog(msg);
+        m.OnChatMessage(msg);
       }
     }
 
@@ -89,12 +93,20 @@ namespace LibDDO
     /// Manually add a combat log message by string.
     /// </summary>
     /// <param name="msg">Combat log message to parse and add.</param>
-    public void AddCombatLogMessage(string msg)
-    {
-      CombatLogMessage e = new CombatLogMessage(msg);
-      combatlog.Add(e);
-      HandleMeters(e);
-      Helper.RaiseEventOnUIThread(OnCombatLogMessage, new object[] { this, e });      
+    public void AddMessage(string m)
+    {      
+      ChatMessage msg = ChatMessage.Parse(m);
+
+      // Is it even a chat message?
+      if (msg != null)
+      {
+        // If so, which one is it?
+        msg = parser.Parse(msg);
+        Helper.RaiseEventOnUIThread(OnChatMessage, new object[] { this, msg });
+        HandleMeters(msg);
+
+        chatlog.Add(msg);
+      }
     }
 
     public static DDO Instance

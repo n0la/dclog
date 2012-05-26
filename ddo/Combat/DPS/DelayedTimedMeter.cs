@@ -18,7 +18,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Timers;
 
@@ -75,6 +74,20 @@ namespace LibDDO.Combat.DPS
       }
     }
 
+    /// <summary>
+    /// This should be overriden by a base class.
+    /// </summary>
+    /// <param name="msg"></param>
+    public virtual void OnChatMessage(ChatMessage msg)
+    {
+    }
+
+    /// <summary>
+    /// This should be overriden by a base class, and must return the result
+    /// at the time of calling.
+    /// </summary>
+    public virtual double Result { get { return 0.0; } }
+
     public virtual void Start()
     {
       timer.Stop();
@@ -89,26 +102,12 @@ namespace LibDDO.Combat.DPS
       State = MeterState.Stopped;
     }
 
-    /// <summary>
-    /// This should be overriden by a base class.
-    /// </summary>
-    /// <param name="msg"></param>
-    public virtual void OnCombatLog(CombatLogMessage msg)
-    {
-    }
-
-    /// <summary>
-    /// This should be overriden by a base class, and must return the result
-    /// at the time of calling.
-    /// </summary>
-    public virtual double Result { get { return 0.0; } }
-
     public uint SecondsPassed
     {
       get { return passed; }
     }
 
-    public TimeSpan TimePassed
+    public virtual TimeSpan TimePassed
     {
       get
       {

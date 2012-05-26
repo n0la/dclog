@@ -48,32 +48,36 @@ namespace LibDDO.Combat.Tanking
     // execution time. And at the time of writing, executing speed took precedence over memory used.
     private Dictionary<string, MonsterDamage> dmg = new Dictionary<string, MonsterDamage>();
     private Dictionary<string, Damage> summary = new Dictionary<string, Damage>();
-    
-    public void OnCombatLog(CombatLogMessage msg)
+
+    public void OnChatMessage(ChatMessage c)
     {
-      if (msg.Type == CombatLogType.DamageTaken)
+      if (c.IsCombat)
       {
-        string str = msg.Damage.Source;
-        string ability = msg.Damage.SourceAbility;
+        CombatMessage msg = c as CombatMessage;
+        if (msg.CombatType == CombatLogType.DamageTaken)
+        {
+          string str = msg.Damage.Source;
+          string ability = msg.Damage.SourceAbility;
 
-        if (ability == "")
-        { // **TODO** i18n required
-          ability = "default";
+          if (ability == "")
+          { // **TODO** i18n required
+            ability = "default";
+          }
+
+          if (!dmg.ContainsKey(str))
+          { // add reference
+            dmg[str] = new MonsterDamage();
+          }
+          if (!summary.ContainsKey(str))
+          { // Add if it doesn't exist.
+            summary[str] = new Damage();
+          }
+
+          dmg[str].Create(ability);
+          dmg[str][ability] += msg.Damage;
+
+          summary[str] += msg.Damage;
         }
-
-        if (!dmg.ContainsKey(str))
-        { // add reference
-          dmg[str] = new MonsterDamage();          
-        }
-        if (!summary.ContainsKey(str))
-        { // Add if it doesn't exist.
-          summary[str] = new Damage();
-        }
-
-        dmg[str].Create(ability);
-        dmg[str][ability] += msg.Damage;
-
-        summary[str] += msg.Damage;
       }
     }
 

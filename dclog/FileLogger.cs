@@ -19,9 +19,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using LibDDO.Combat;
 using System.Threading;
 using System.IO;
+using LibDDO;
 
 namespace dclog
 {
@@ -32,11 +32,11 @@ namespace dclog
 
   /**
    *  This file logger creates to file logs: 
-   *   o date_combatlog.txt, which contains the combat log as it is received; and
+   *   o date_chatlog.txt, which contains the combat log as it is received; and
    *   o date_statuslog.txt, which contains additional information on how the strings were parsed.
    *  All of them are stamped per date.
    */
-  public class FileLogger : ICombatLogListener
+  public class FileLogger : IChatListener
   {
     private string logfile = "";
     private string statusfile = "";
@@ -50,7 +50,7 @@ namespace dclog
     private StreamWriter status;
     private Exception error;
 
-    private Queue<CombatLogMessage> messages = new Queue<CombatLogMessage>();
+    private Queue<ChatMessage> messages = new Queue<ChatMessage>();
 
     private void OpenFile()
     {
@@ -63,7 +63,7 @@ namespace dclog
 
       if (method == LoggingMethod.DateStamped)
       {
-        logfile = string.Format(@"{0}\{1}.{2}.{3}_combatlog.txt",
+        logfile = string.Format(@"{0}\{1}.{2}.{3}_chatlog.txt",
                                  logdir,
                                  started.Day,
                                  started.Month,
@@ -154,7 +154,7 @@ namespace dclog
           {
             if (messages.Count != 0)
             { // write one message to file
-              CombatLogMessage msg = messages.Dequeue();
+              ChatMessage msg = messages.Dequeue();
               writer.WriteLine(msg.ToOriginalString());
               writer.Flush();
               status.WriteLine(msg.ToString());
@@ -169,7 +169,7 @@ namespace dclog
       }
     }
 
-    public void OnCombatLog(CombatLogMessage msg)
+    public void OnChatMessage(ChatMessage msg)
     {
       lock (messages)
       {

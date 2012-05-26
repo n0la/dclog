@@ -31,7 +31,11 @@ namespace DDOHook
     HookInterface iface;
     LocalHook wcsncpyHook;
     Stack<string> stringqueue = new Stack<string>();
-    private static Regex combatlog = new Regex(@"^Combat.{1}\):.{2}", RegexOptions.Compiled);
+    private static MessageFilter combatlog = new MessageFilter(@"^Combat.{1}\):.{2}", "Combat");
+    private static MessageFilter standardlog = new MessageFilter(@"^Standard.{1}\):.{2}", "Standard");
+    private static MessageFilter advancementlog = new MessageFilter(@"^Advancement.{1}\):.{2}", "Advancement");
+
+    private List<MessageFilter> knownmessages = new List<MessageFilter>() { combatlog, standardlog, advancementlog };
 
     public DDOHook(RemoteHooking.IContext context, String channel)
     {
@@ -64,10 +68,13 @@ namespace DDOHook
             lock (stringqueue)
             {
               str = stringqueue.Pop();
-              if (combatlog.Match(str).Length > 0)
+              foreach (MessageFilter r in knownmessages)
               {
-                str = combatlog.Replace(str, "(Combat) ");
-                iface.OnNewCombatLog(me, str);
+                if (r.Applies(str))
+                {
+                  str = r.Prettify(str);
+                  iface.OnNewMessage(me, str);
+                }
               }
             }
 
@@ -124,10 +131,10 @@ namespace DDOHook
         DDOHook me = (DDOHook)HookRuntimeInfo.Callback;
         if (size > 4 && str1 != IntPtr.Zero && str2 != IntPtr.Zero) // Length of Combat
         {
-          string str = Marshal.PtrToStringUni(str2);
+          string src = Marshal.PtrToStringUni(str2);
           lock (me.stringqueue)
           {
-            me.stringqueue.Push(str);
+            me.stringqueue.Push(src);
           }
         }
       }

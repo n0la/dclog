@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="DDOHook.cs" />
     <Compile Include="HookInterface.cs" />
+    <Compile Include="MessageFilter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

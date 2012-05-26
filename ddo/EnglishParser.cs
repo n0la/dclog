@@ -28,7 +28,7 @@ namespace LibDDO.Combat
   /// This class is responsible for parsing the combat log produced by the English
   /// game client. It is also responsible for converting damage types from English to the internal type.
   /// </summary>
-  public class EnglishCombatLog : ILanguageParser
+  public class EnglishParser : ILanguageParser
   {
     private static Regex damagedone = new Regex(@"You hit (.*?) for (\d+) point[s]{0,1} of (.*?)damage\.", RegexOptions.Compiled);
     private static Regex damagedonedr = new Regex(@"You hit (.*?) for (\d+) point[s]{0,1} of (.*?) damage after (\d+) .*?blocked by (.*?)damage reduction\.", RegexOptions.Compiled);
@@ -87,16 +87,16 @@ namespace LibDDO.Combat
       }
     }
 
-    private void ParseDamageDone(CombatLogMessage msg, Match m)
+    private void ParseDamageDone(CombatMessage msg, Match m)
     {
-      msg.Type = CombatLogType.DamageDone;
+      msg.CombatType = CombatLogType.DamageDone;
       string target = m.Groups[1].Value;
       uint points = 0;
 
       if (!UInt32.TryParse(m.Groups[2].Value, out points))
       {
         points = 0;
-        msg.State = CombatLogMessageState.ParsingError;
+        msg.State = ChatMessageState.ParsingError;
         return;
       }
 
@@ -108,13 +108,13 @@ namespace LibDDO.Combat
         if (!UInt32.TryParse(m.Groups[4].Value, out blocked))
         {
           blocked = 0;
-          msg.State = CombatLogMessageState.ParsingError;
+          msg.State = ChatMessageState.ParsingError;
           return;
         }
         blockedby = m.Groups[5].Value.Trim();
       }
 
-      msg.State = CombatLogMessageState.Parsed;
+      msg.State = ChatMessageState.Parsed;
       msg.Damage = new Damage(points, blocked, blockedby, Damage.Player, target, StringToType(type));
       SplitTargetAbility(msg.Damage);
     }
@@ -125,33 +125,33 @@ namespace LibDDO.Combat
     /// </summary>
     /// <param name="msg"></param>
     /// <param name="m"></param>
-    private void ParseNoDamage(CombatLogMessage msg, Match m)
+    private void ParseNoDamage(CombatMessage msg, Match m)
     {
-      msg.Type = CombatLogType.DamageTaken;
+      msg.CombatType = CombatLogType.DamageTaken;
       string source = m.Groups[1].Value;
       uint blocked = 0;
       if (!UInt32.TryParse(m.Groups[2].Value, out blocked))
       {
         blocked = 0;
-        msg.State = CombatLogMessageState.ParsingError;
+        msg.State = ChatMessageState.ParsingError;
         return;
       }
       string blockedby = m.Groups[3].Value;
 
-      msg.State = CombatLogMessageState.Parsed;
+      msg.State = ChatMessageState.Parsed;
       msg.Damage = new Damage(0, blocked, blockedby, source, Damage.Player, DamageType.Unknown);
     }
 
-    private void ParseDamageReceived(CombatLogMessage msg, Match m)
+    private void ParseDamageReceived(CombatMessage msg, Match m)
     {
-      msg.Type = CombatLogType.DamageTaken;
+      msg.CombatType = CombatLogType.DamageTaken;
       string source = m.Groups[1].Value;
       uint points = 0;
 
       if (!UInt32.TryParse(m.Groups[2].Value, out points))
       {
         points = 0;
-        msg.State = CombatLogMessageState.ParsingError;
+        msg.State = ChatMessageState.ParsingError;
         return;
       }
       string type = m.Groups[3].Value.Trim();
@@ -163,53 +163,68 @@ namespace LibDDO.Combat
         if (!UInt32.TryParse(m.Groups[4].Value, out blocked))
         {
           blocked = 0;
-          msg.State = CombatLogMessageState.ParsingError;
+          msg.State = ChatMessageState.ParsingError;
           return;
         }
         blockedby = m.Groups[5].Value.Trim();
       }
 
-      msg.State = CombatLogMessageState.Parsed;
+      msg.State = ChatMessageState.Parsed;
       msg.Damage = new Damage(points, blocked, blockedby, source, Damage.Player, StringToType(type));
       SplitTargetAbility(msg.Damage);
     }
 
-    public bool Parse(CombatLogMessage msg)
+    public ChatMessage Parse(ChatMessage msg)
     {
       Match m = null;
-      bool recognised = true;
+      ChatMessage result = msg;
+      CombatMessage combat;
 
-      if ( (m = damagedone.Match(msg.Message)).Success ) 
+      if ( (m = damagedone.Match(msg.Text)).Success ) 
       {
-        ParseDamageDone(msg, m);
-      } 
-      else if ( (m = damagedonedr.Match(msg.Message)).Success ) 
-      {
-        ParseDamageDone(msg, m);
+        combat = new CombatMessage(msg);
+        ParseDamageDone(combat, m);
+        result = combat;
       }
-      else if ((m = damagervd.Match(msg.Message)).Success)
+      else if ((m = damagedonedr.Match(msg.Text)).Success) 
       {
-        ParseDamageReceived(msg, m);
+        combat = new CombatMessage(msg);
+        ParseDamageDone(combat, m);
+        result = combat;
       }
-      else if ((m = damagervddr.Match(msg.Message)).Success)
+      else if ((m = damagervd.Match(msg.Text)).Success)
       {
-        ParseDamageReceived(msg, m);
+        combat = new CombatMessage(msg);
+        ParseDamageReceived(combat, m);
+        result = combat;
       }
-      else if ((m = damage.Match(msg.Message)).Success)
+      else if ((m = damagervddr.Match(msg.Text)).Success)
       {
-        ParseDamageReceived(msg, m);
+        combat = new CombatMessage(msg);
+        ParseDamageReceived(combat, m);
+        result = combat;
       }
-      else if ((m = damageno.Match(msg.Message)).Success)
+      else if ((m = damage.Match(msg.Text)).Success)
       {
-        ParseNoDamage(msg, m);
+        combat = new CombatMessage(msg);
+        ParseDamageReceived(combat, m);
+        result = combat;
       }
-      else if ((m = killed.Match(msg.Message)).Success)
+      else if ((m = damageno.Match(msg.Text)).Success)
       {
-        msg.Type = CombatLogType.TargetKilled;
-        msg.Target = m.Groups[1].Value;
-        msg.State = CombatLogMessageState.Parsed;
+        combat = new CombatMessage(msg);
+        ParseNoDamage(combat, m);
+        result = combat;
       }
-      return recognised;
+      else if ((m = killed.Match(msg.Text)).Success)
+      {
+        combat = new CombatMessage(msg);
+        combat.CombatType = CombatLogType.TargetKilled;
+        combat.Target = m.Groups[1].Value;
+        combat.State = ChatMessageState.Parsed;
+        result = combat;
+      }
+      return result;
     }
 
 
