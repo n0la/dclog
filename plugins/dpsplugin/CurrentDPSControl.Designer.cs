@@ -1,6 +1,6 @@
 ﻿namespace DCLog.DPSPlugin
 {
-  partial class SimpleDPSMeterControl
+  partial class CurrentDPSControl
   {
     /// <summary> 
     /// Required designer variable.
@@ -29,9 +29,9 @@
     private void InitializeComponent()
     {
       this.components = new System.ComponentModel.Container();
-      System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-      System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-      System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+      System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+      System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+      System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
       this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
       this.groupBox1 = new System.Windows.Forms.GroupBox();
       this.targethelp = new System.Windows.Forms.LinkLabel();
@@ -60,8 +60,8 @@
       this.tableLayoutPanel1.RowCount = 2;
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 110F));
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-      this.tableLayoutPanel1.Size = new System.Drawing.Size(877, 454);
-      this.tableLayoutPanel1.TabIndex = 4;
+      this.tableLayoutPanel1.Size = new System.Drawing.Size(813, 458);
+      this.tableLayoutPanel1.TabIndex = 5;
       // 
       // groupBox1
       // 
@@ -165,21 +165,21 @@
       // 
       // dpschart
       // 
-      chartArea1.AxisX.Title = "Seconds";
-      chartArea1.AxisY.Title = "DPS";
-      chartArea1.Name = "ChartArea1";
-      this.dpschart.ChartAreas.Add(chartArea1);
+      chartArea2.AxisX.Title = "Seconds";
+      chartArea2.AxisY.Title = "DPS";
+      chartArea2.Name = "ChartArea1";
+      this.dpschart.ChartAreas.Add(chartArea2);
       this.dpschart.Dock = System.Windows.Forms.DockStyle.Fill;
-      legend1.Name = "Legend1";
-      this.dpschart.Legends.Add(legend1);
+      legend2.Name = "Legend1";
+      this.dpschart.Legends.Add(legend2);
       this.dpschart.Location = new System.Drawing.Point(3, 113);
       this.dpschart.Name = "dpschart";
-      series1.ChartArea = "ChartArea1";
-      series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-      series1.Legend = "Legend1";
-      series1.Name = "DPS";
-      this.dpschart.Series.Add(series1);
-      this.dpschart.Size = new System.Drawing.Size(871, 338);
+      series2.ChartArea = "ChartArea1";
+      series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+      series2.Legend = "Legend1";
+      series2.Name = "DPS";
+      this.dpschart.Series.Add(series2);
+      this.dpschart.Size = new System.Drawing.Size(807, 342);
       this.dpschart.TabIndex = 4;
       this.dpschart.Text = "Single Target DPS";
       // 
@@ -188,13 +188,13 @@
       this.help.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
       this.help.ToolTipTitle = "Help";
       // 
-      // SimpleDPSMeterControl
+      // CurrentDPSControl
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.tableLayoutPanel1);
-      this.Name = "SimpleDPSMeterControl";
-      this.Size = new System.Drawing.Size(877, 454);
+      this.Name = "CurrentDPSControl";
+      this.Size = new System.Drawing.Size(813, 458);
       this.tableLayoutPanel1.ResumeLayout(false);
       this.groupBox1.ResumeLayout(false);
       this.groupBox1.PerformLayout();
@@ -207,13 +207,13 @@
 
     private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     private System.Windows.Forms.GroupBox groupBox1;
+    private System.Windows.Forms.LinkLabel targethelp;
     private System.Windows.Forms.Label ststatus;
     private System.Windows.Forms.Button ststop;
     private System.Windows.Forms.Button ststart;
     private System.Windows.Forms.ComboBox sttarget;
     private System.Windows.Forms.Label label1;
     private System.Windows.Forms.DataVisualization.Charting.Chart dpschart;
-    private System.Windows.Forms.LinkLabel targethelp;
     private System.Windows.Forms.ToolTip help;
   }
 }

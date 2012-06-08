@@ -45,9 +45,9 @@ namespace LibDDO.Combat.DPS
     public event DPSMeterTickedDelegate Ticked;
     public event DPSMeterStateChangedDelegate StateChanged;
 
-    private Timer timer = new Timer();
-    private MeterState state = MeterState.Stopped;
-    private uint passed = 0;
+    protected Timer timer = new Timer();
+    protected MeterState state = MeterState.Stopped;
+    protected uint passed = 0;
 
     protected MeterState State
     {
@@ -65,7 +65,7 @@ namespace LibDDO.Combat.DPS
       timer.Interval = 1000.0;
     }
 
-    void timer_Elapsed(object sender, ElapsedEventArgs e)
+    protected virtual void timer_Elapsed(object sender, ElapsedEventArgs e)
     {
       if (state == MeterState.Running)
       {

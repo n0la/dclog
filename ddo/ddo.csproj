@@ -51,6 +51,8 @@
     <Compile Include="Combat\CombatLogMessage.cs" />
     <Compile Include="ChatLog.cs" />
     <Compile Include="Combat\Damage.cs" />
+    <Compile Include="Combat\DPS\CurrentTargetMeter.cs" />
+    <Compile Include="Combat\DPS\DelayedTimedTargetMeter.cs" />
     <Compile Include="IChatListener.cs" />
     <Compile Include="DDO.cs" />
     <Compile Include="DDOHookInterface.cs" />
@@ -61,7 +63,7 @@
     <Compile Include="LanguageParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Combat\Tanking\SimpleTankMeter.cs" />
-    <Compile Include="Combat\DPS\SingleTargetMeter.cs" />
+    <Compile Include="Combat\DPS\AverageTargetMeter.cs" />
     <Compile Include="Combat\Tanking\ITankMeter.cs" />
     <Compile Include="Combat\Tanking\TankMeterByMonster.cs" />
     <Compile Include="Combat\Tanking\TankMeterByType.cs" />

@@ -18,32 +18,29 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using DCLog.Plugins;
-using LibDDO;
+using System.Text;
 
 namespace DCLog.DPSPlugin
 {
-  public class TankPlugin : IPlugin
+  public class AverageDPSPlugin : DCLog.Plugins.IPlugin
   {
-    private DDO instance = null;
-    private TankMeterControl tankmeter = null;
+    private LibDDO.DDO instance = null;
+    private AverageDPSMeterControl dpsmeter = null;
 
     public string Name
     {
-      get { return "Tank Meter"; }
+      get { return "Average DPS"; }
     }
 
     public string Description
     {
-      get { return "Graph and metering for incoming damage and damage mitigation."; }
+      get { return "Calculates average DPS against a single target over time."; }
     }
 
     public string Author
     {
-      get { return "Copyright (C) 2012 by Florian Stinglmayr."; }
+      get { return "Copyright (C) 2012 Florian Stinglmayr"; }
     }
 
     public string Website
@@ -62,24 +59,24 @@ namespace DCLog.DPSPlugin
       return true;
     }
 
-    public void Initialise(DDO instance)
+    public void Destroy()
+    {
+    }
+
+    public void Initialise(LibDDO.DDO instance)
     {
       this.instance = instance;
     }
 
-    public void Destroy()
-    {      
-    }
-
     public List<Control> Controls
     {
-      get 
+      get
       {
-        if (tankmeter == null)
+        if (dpsmeter == null)
         {
-          tankmeter = new TankMeterControl(instance);
+          dpsmeter = new AverageDPSMeterControl(instance);
         }
-        return new List<Control>() { tankmeter };
+        return new List<Control>() { dpsmeter };
       }
     }
   }

@@ -28,24 +28,12 @@ namespace LibDDO.Combat.DPS
   /// A simple, timed single target DPS meter. Only damage done to a specific target are
   /// recorded and counted. Useful when measuring ones DPS against bosses.
   /// </summary>
-  public class SingleTargetMeter : DelayedTimedMeter
+  public class AverageTargetMeter : DelayedTimedTargetMeter
   {
-    private string target = "";
     private uint damagedone = 0;
 
-    public SingleTargetMeter()
+    public AverageTargetMeter()
     {
-    }
-
-    public SingleTargetMeter(string target)
-    {
-      this.target = target;
-    }
-
-    public string Target
-    {
-      get { return target; }
-      set { target = value; }
     }
 
     public override void Start()

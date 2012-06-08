@@ -8,7 +8,7 @@
     <ProjectGuid>{EB670804-387E-4F06-A546-C91E6763D235}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>dpsplugin</RootNamespace>
+    <RootNamespace>DCLog.DPSPlugin</RootNamespace>
     <AssemblyName>dpsplugin</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -41,13 +41,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DPSPlugin.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SimpleDPSMeterControl.cs">
+    <Compile Include="CurrentDPSPlugin.cs" />
+    <Compile Include="AverageDPSPlugin.cs" />
+    <Compile Include="CurrentDPSControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="SimpleDPSMeterControl.Designer.cs">
-      <DependentUpon>SimpleDPSMeterControl.cs</DependentUpon>
+    <Compile Include="CurrentDPSControl.Designer.cs">
+      <DependentUpon>CurrentDPSControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="AverageDPSMeterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AverageDPSMeterControl.Designer.cs">
+      <DependentUpon>AverageDPSMeterControl.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -61,8 +68,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="SimpleDPSMeterControl.resx">
-      <DependentUpon>SimpleDPSMeterControl.cs</DependentUpon>
+    <EmbeddedResource Include="AverageDPSMeterControl.resx">
+      <DependentUpon>AverageDPSMeterControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CurrentDPSControl.resx">
+      <DependentUpon>CurrentDPSControl.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

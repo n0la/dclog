@@ -31,7 +31,7 @@ namespace DCLog.Plugins
   /// </summary>
   public class Plugins
   {
-    public static Version InterfaceVersion = new Version(1, 0, 0);
+    public static Version InterfaceVersion = new Version(1, 0, 1);
 
     private List<string> pluginpaths = new List<string>();
     private List<IPlugin> loadedplugins = new List<IPlugin>();

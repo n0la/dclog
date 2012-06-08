@@ -19,35 +19,41 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
+using System.Data;
 using System.Text;
 using System.Windows.Forms;
-using System.Drawing;
-using LibDDO;
-using LibDDO.Combat;
 using LibDDO.Combat.DPS;
 
 namespace DCLog.DPSPlugin
 {
-  public partial class SimpleDPSMeterControl : UserControl
+  public partial class CurrentDPSControl : UserControl
   {
-    private SingleTargetMeter singletarget = new SingleTargetMeter();
-    private DDO instance = null;
+    private LibDDO.DDO instance = null;
+    private CurrentTargetMeter meter = new CurrentTargetMeter();
 
-    public SimpleDPSMeterControl()
+    public CurrentDPSControl()
     {
       InitializeComponent();
     }
 
-    public SimpleDPSMeterControl(DDO instance)
+    public CurrentDPSControl(LibDDO.DDO instance)
     {
+      InitializeComponent();
+
       this.instance = instance;
-      this.instance.RegisterListener(singletarget);
-      InitializeComponent();
-      singletarget.Ticked += new DPSMeterTickedDelegate(singletarget_Ticked);
-      singletarget.StateChanged += new DPSMeterStateChangedDelegate(singletarget_StateChanged);
+      this.instance.RegisterListener(meter);
+      meter.StateChanged += new DPSMeterStateChangedDelegate(meter_StateChanged);
+      meter.Ticked += new CurrentDPSMeterTicked(meter_Ticked);
     }
 
-    void singletarget_StateChanged(DelayedTimedMeter meter, MeterState ny)
+    void meter_Ticked(CurrentTargetMeter meter, uint result)
+    {
+      // Add a point.
+      dpschart.Series[0].Points.AddXY(meter.TimePassed.TotalSeconds, result);
+    }
+
+    void meter_StateChanged(DelayedTimedMeter meter, MeterState ny)
     {
       switch (ny)
       {
@@ -55,12 +61,6 @@ namespace DCLog.DPSPlugin
         case MeterState.Stopped: ststatus.Text = "Stopped!"; ststatus.ForeColor = Color.Red; break;
         case MeterState.Running: ststatus.Text = "Running!"; ststatus.ForeColor = Color.Green; break;
       }
-    }
-
-    void singletarget_Ticked(DelayedTimedMeter meter)
-    {
-      // Add a point.
-      dpschart.Series[0].Points.AddXY(singletarget.TimePassed.TotalSeconds, singletarget.Result);
     }
 
     private void ststart_Click(object sender, EventArgs e)
@@ -72,15 +72,17 @@ namespace DCLog.DPSPlugin
         target = sttarget.Text;
       }
 
-      singletarget.Stop();
-      singletarget.Target = target;
-      singletarget.Start();
+      meter.Stop();
+      meter.Target = target;
+      meter.Start();
       dpschart.Series[0].Points.Clear();
     }
 
     private void ststop_Click(object sender, EventArgs e)
     {
-      singletarget.Stop();
+      meter.Stop();
     }
+
+
   }
 }

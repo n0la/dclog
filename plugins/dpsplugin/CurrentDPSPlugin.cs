@@ -23,29 +23,29 @@ using System.Text;
 
 namespace DCLog.DPSPlugin
 {
-  public class DPSPlugin : DCLog.Plugins.IPlugin
+  public class CurrentDPSPlugin : DCLog.Plugins.IPlugin
   {
     private LibDDO.DDO instance = null;
-    private SimpleDPSMeterControl dpsmeter = null;
+    private CurrentDPSControl control = null;
 
     public string Name
     {
-      get { return "Average DPS"; }
+      get { return "Current DPS"; }
     }
 
     public string Description
     {
-      get { return "Calculates average DPS against a single target over time."; }
+      get { return "Calculates the current DPS you did."; }
     }
 
     public string Author
     {
-      get { return "Copyright (C) 2012 Florian Stinglmayr"; }
+      get { return "Copyright (C) 2012 by Florian Stinglmayr"; }
     }
 
     public string Website
     {
-      get { return ""; }
+      get { return "https://github.com/n0la/dclog"; }
     }
 
     public Version Version
@@ -55,12 +55,8 @@ namespace DCLog.DPSPlugin
 
     public bool IsCompatible(Version v)
     {
-      // **TODO** actual version check.
+      // **TODO** Version check.
       return true;
-    }
-
-    public void Destroy()
-    {
     }
 
     public void Initialise(LibDDO.DDO instance)
@@ -68,15 +64,18 @@ namespace DCLog.DPSPlugin
       this.instance = instance;
     }
 
+    public void Destroy()
+    {
+    }
+
     public List<Control> Controls
     {
-      get
-      {
-        if (dpsmeter == null)
+      get {
+        if (control == null)
         {
-          dpsmeter = new SimpleDPSMeterControl(instance);
+          control = new CurrentDPSControl(this.instance);
         }
-        return new List<Control>() { dpsmeter };
+        return new List<Control> { control };
       }
     }
   }
