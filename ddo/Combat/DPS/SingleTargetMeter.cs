@@ -68,7 +68,8 @@ namespace LibDDO.Combat.DPS
         if (msg.CombatType == CombatLogType.DamageDone)
         {
 
-          if (String.Compare(msg.Damage.Target, target, true) == 0)
+          if (String.Compare(msg.Damage.Target, target, true) == 0 ||
+              String.IsNullOrEmpty(target) )
           {
             damagedone += msg.Damage.Points;
             if (State != MeterState.Running)

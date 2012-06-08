@@ -65,13 +65,15 @@ namespace DCLog.DPSPlugin
 
     private void ststart_Click(object sender, EventArgs e)
     {
-      if (String.IsNullOrEmpty(sttarget.Text))
+      string target = "";
+
+      if (!String.IsNullOrEmpty(sttarget.Text))
       {
-        return;
+        target = sttarget.Text;
       }
 
       singletarget.Stop();
-      singletarget.Target = sttarget.Text;
+      singletarget.Target = target;
       singletarget.Start();
       dpschart.Series[0].Points.Clear();
     }

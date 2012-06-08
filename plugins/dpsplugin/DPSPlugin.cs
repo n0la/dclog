@@ -30,7 +30,7 @@ namespace DCLog.DPSPlugin
 
     public string Name
     {
-      get { return "Single Target DPS"; }
+      get { return "Average DPS"; }
     }
 
     public string Description
