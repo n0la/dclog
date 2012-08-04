@@ -6,3 +6,9 @@
 *obj*
 *.config
 
+/ddohook/*.sdf
+/ddohook/*.suo
+/ddohook/*.filters
+/ddohook/*.user
+/ddohook/*.opensdf
+ipch

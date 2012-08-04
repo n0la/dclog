@@ -29,6 +29,11 @@ namespace LibDDO
   /// </summary>
   public class Helper
   {
+    public static string RandomString()
+    {
+      return System.IO.Path.GetRandomFileName().Replace(".", "");
+    }
+
     /// <summary>
     /// This method calls the given event with the specified parameters either synchronized when the
     /// target and caller thread are the same, or asynchronized if the target and caller are in 

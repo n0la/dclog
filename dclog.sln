@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual C# Express 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dclog", "dclog\dclog.csproj", "{A008BF89-66A8-4617-8294-3D52FE64C1C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ddohook", "ddohook\ddohook.csproj", "{50431D0C-AFA3-4C2A-BF3E-AAA3F72C24A7}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ddo", "ddo\ddo.csproj", "{0044D888-4F31-4BDE-8F81-06277C89D7AB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dpsplugin", "plugins\dpsplugin\dpsplugin.csproj", "{EB670804-387E-4F06-A546-C91E6763D235}"
@@ -33,16 +31,6 @@ Global
 		{A008BF89-66A8-4617-8294-3D52FE64C1C4}.Release|Mixed Platforms.Build.0 = Release|x86
 		{A008BF89-66A8-4617-8294-3D52FE64C1C4}.Release|x86.ActiveCfg = Release|x86
 		{A008BF89-66A8-4617-8294-3D52FE64C1C4}.Release|x86.Build.0 = Release|x86
-		{50431D0C-AFA3-4C2A-BF3E-AAA3F72C24A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{50431D0C-AFA3-4C2A-BF3E-AAA3F72C24A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{50431D0C-AFA3-4C2A-BF3E-AAA3F72C24A7}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{50431D0C-AFA3-4C2A-BF3E-AAA3F72C24A7}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{50431D0C-AFA3-4C2A-BF3E-AAA3F72C24A7}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{50431D0C-AFA3-4C2A-BF3E-AAA3F72C24A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{50431D0C-AFA3-4C2A-BF3E-AAA3F72C24A7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{50431D0C-AFA3-4C2A-BF3E-AAA3F72C24A7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{50431D0C-AFA3-4C2A-BF3E-AAA3F72C24A7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{50431D0C-AFA3-4C2A-BF3E-AAA3F72C24A7}.Release|x86.ActiveCfg = Release|Any CPU
 		{0044D888-4F31-4BDE-8F81-06277C89D7AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0044D888-4F31-4BDE-8F81-06277C89D7AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0044D888-4F31-4BDE-8F81-06277C89D7AB}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU

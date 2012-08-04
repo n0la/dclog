@@ -22,7 +22,9 @@ using System.Linq;
 using System.Text;
 using System.Runtime.Remoting;
 using System.Threading;
-using System.ComponentModel;
+using System.Runtime.InteropServices;
+using System.IO;
+using System.IO.Pipes;
 using EasyHook;
 using LibDDO.Combat;
 using LibDDO.Combat.DPS;
@@ -32,7 +34,9 @@ namespace LibDDO
   public class DDO
   {
     private static DDO instance = new DDO();
-    private string channelname = null;
+    private Thread pipethread = null;
+    private string pipename = "";
+    private NamedPipeServerStream pipe = null;
 
     private ChatLog chatlog = new ChatLog();
     private List<IChatListener> listeners = new List<IChatListener>();
@@ -114,21 +118,57 @@ namespace LibDDO
       get { return instance; }
     }
 
+    private static void PipeThreadHandler(object obj)
+    {
+      DDO me = obj as DDO;
+
+      try
+      {
+        me.pipe.WaitForConnection();
+        me.Notify("Hook DLL connected!");
+
+        StreamReader reader = new StreamReader(me.pipe, Encoding.Unicode);
+
+        while (true)
+        {
+          if (!me.pipe.IsConnected)
+          {
+            me.Notify("Client disconnected, or game closed.");
+            return;
+          }
+
+          string message = reader.ReadLine();
+
+          if (message.StartsWith("MSG:"))
+          {
+            message = message.Substring(4);
+            me.AddMessage(message);
+          }
+        }
+      }
+      catch (Exception e)
+      {
+        me.Notify("Pipe error:\r\n" + e.ToString());
+      }
+    }
+
     /// <summary>
     /// Hook onto a DDO Process 
     /// </summary>
     /// <param name="pid">PID of the process to hook to.</param>
     public void HookOnto(int pid)
-    {      
-      Config.Register("Hooks into DDO.", "ddohook.dll");
+    {
+      pipename = String.Format("ddohook{0}", pid);
+      pipe = new NamedPipeServerStream(pipename, PipeDirection.InOut);
+      pipethread = new Thread(PipeThreadHandler);
 
-      RemoteHooking.IpcCreateServer<DDOHookInterface>(ref channelname, WellKnownObjectMode.SingleCall);
-      RemoteHooking.Inject(pid,
-                           "ddohook.dll",
-                           "doohook.dll",
-                           channelname
-                           );      
-      Notify(string.Format("Successfully hooked onto {0}", pid));
+      pipethread.Start(this);
+      Thread.Sleep(200);
+
+      Notify(string.Format("Listening for connections on a named pipe called '{0}'.\n", pipename));
+      NativeAPI.RhInjectLibrary(pid, 0, NativeAPI.EASYHOOK_INJECT_DEFAULT, "nativeddohook.dll", null, IntPtr.Zero, 0);
+    
+      Notify(string.Format("Waiting for an answer from PID {0}...", pid));
     }
   }
 }

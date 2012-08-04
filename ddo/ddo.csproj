@@ -55,7 +55,6 @@
     <Compile Include="Combat\DPS\DelayedTimedTargetMeter.cs" />
     <Compile Include="IChatListener.cs" />
     <Compile Include="DDO.cs" />
-    <Compile Include="DDOHookInterface.cs" />
     <Compile Include="Combat\DPS\DelayedTimedMeter.cs" />
     <Compile Include="Combat\DPS\IDPSMeter.cs" />
     <Compile Include="EnglishParser.cs" />
@@ -67,12 +66,6 @@
     <Compile Include="Combat\Tanking\ITankMeter.cs" />
     <Compile Include="Combat\Tanking\TankMeterByMonster.cs" />
     <Compile Include="Combat\Tanking\TankMeterByType.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ddohook\ddohook.csproj">
-      <Project>{50431D0C-AFA3-4C2A-BF3E-AAA3F72C24A7}</Project>
-      <Name>ddohook</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="DDO.snk" />
