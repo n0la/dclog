@@ -19,25 +19,33 @@
 
  1. Disable UAC.
  2. Disable any AntiVir software you might have that could interfere.
- 3. Download Visual C# Express 2010.
+ 3. Download Visual C# Express 2010 and Visual C++ Express 2010.
  4. Open the solution and compile the entire solution.
+ 5. Open the solution dclog.sln and the ddohook/ddohook.sln.
+ 6. Compile everything.
+ 7. Copy every binary you can find into one single folder, except the files 
+    *plugin.dll, they go in a subfolder called plugins/ beneath dclog.exe.
+ 8. Copy the EasyHook binaries into the same folder.
+	
+  Your directory hierarchy should look something like this:
+  
+   .
+     \ dclog.exe
+	 \ ddo.dll
+	 \ EasyHook.dll
+	 \ EasyHook32.dll
+	 \ EasyHook32Svc.exe
+	 \ EasyHook64.dll
+	 \ EasyHook64Svc.exe
+	 \ libdclog.dll
+	 \ nativeddohook.dll
+	 \ plugins
+	    \ dpsplugin.dll
+		\ tankplugin.dll
+		
+ The plugins are optional, but the application makes more sense with them.
  
- Then either:
-
- 5. Copy the contents of each {dclog|ddo|ddohook}\bin\Release\ into one single 
-    directory.
- 6. Copy the contents of easyhook\ into this new folder.
- 7. Run dclog.exe
-
- Or:
-
- 5. Copy the contents of {ddo|ddohook}\bin\Release into the dclog\bin\Debug 
-    directory.
- 6. Copy the contents of easyhook into dclog\bin\Debug directory.
- 7. Run "Start" or "Debug" from Visual Studio.
-
- 8. Run the game.
- 9. Select "File" -> "Attach" in the Main Window.
- 10. Have fun!
- 
+ **NOTE**: A debug build of nativeddohook.dll writes a log to D:\. If you don't
+           have a D:\ you are in trouble. Take a release build of 
+		   nativeddohook.dll instead.
  

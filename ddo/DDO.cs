@@ -139,10 +139,13 @@ namespace LibDDO
 
           string message = reader.ReadLine();
 
-          if (message.StartsWith("MSG:"))
+          if (message != null)
           {
-            message = message.Substring(4);
-            me.AddMessage(message);
+            if (message.StartsWith("MSG:"))
+            {
+              message = message.Substring(4);
+              me.AddMessage(message);
+            }
           }
         }
       }

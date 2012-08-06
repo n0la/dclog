@@ -27,6 +27,17 @@
  * handled, for n > 1 the message duplicates are processed as well.
  */
 
+/**
+ * **TODO**:
+ * This should be rewritten to a generic DLL, that simply redirects all strings found
+ * to the client it connects to. No logic should be here, and all logic should be moved
+ * the client.
+ *
+ * **TODO**:
+ * The wcsncpy_hooked() should be freed from logic so it's now slowed down. This way we
+ * could replace it with an assembler version to get even more performance back.
+ */
+
 struct accepted_header {
     // Channel name, in the native tongue
     const wchar_t *header;
@@ -34,6 +45,7 @@ struct accepted_header {
     size_t length;
 };
 
+HOOK_TRACE_INFO wcsncpy_hook = {0};
 ddohook::pipe_client client_;
 
 // List of accepted headers.
@@ -108,8 +120,7 @@ extern "C" {
         return wcsncpy(s1, s2, s);
     }
 
-    DDOHOOK_EXPORT void __stdcall NativeInjectionEntryPoint(unsigned int unused) {
-        HOOK_TRACE_INFO wcsncpy_hook = {0};
+    DDOHOOK_EXPORT void __stdcall NativeInjectionEntryPoint(unsigned int unused) {        
         HMODULE msvcr = NULL;
         wchar_t pipename[100] = {0};
         DWORD pid = GetCurrentProcessId();

@@ -188,6 +188,7 @@ namespace dclog
     private void quitToolStripMenuItem_Click(object sender, EventArgs e)
     {
       this.Close();
+      Application.Exit();
     }
 
     private void reportABugToolStripMenuItem_Click(object sender, EventArgs e)
