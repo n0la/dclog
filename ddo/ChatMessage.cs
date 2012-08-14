@@ -64,7 +64,7 @@ namespace LibDDO
 
   public class ChatMessage
   {
-    private static Regex r = new Regex(@"\((\w+)\)\s*([^$]+)", RegexOptions.Compiled);
+    private static Regex r = new Regex(@"\((\w+)\)\s*\:\s*([^$]+)", RegexOptions.Compiled);
 
     private string type = "";
     private string text = "";
@@ -90,7 +90,7 @@ namespace LibDDO
     {
       this.text = text;
       this.type = type;
-      this.message = string.Format("({0}) {1}", type, text);
+      this.message = string.Format("({0}): {1}", type, text);
       timestamp = DateTime.Now;
     }
 
