@@ -50,13 +50,13 @@ namespace DCLog.DPSPlugin
 
     public Version Version
     {
-      get { return new Version(1, 0, 0); }
+      get { return new Version(1, 0, 1); }
     }
 
     public bool IsCompatible(Version v)
     {
-      // **TODO** actual version check.
-      return true;
+      Version needed = new Version(1, 0, 2);
+      return (v.CompareTo(needed) >= 0);
     }
 
     public void Destroy()

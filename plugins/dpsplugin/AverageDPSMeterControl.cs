@@ -60,7 +60,8 @@ namespace DCLog.DPSPlugin
     void singletarget_Ticked(DelayedTimedMeter meter)
     {
       // Add a point.
-      dpschart.Series[0].Points.AddXY(singletarget.TimePassed.TotalSeconds, singletarget.Result);
+      int i = dpschart.Series[0].Points.AddXY(singletarget.TimePassed.TotalSeconds, singletarget.Result);
+      dpschart.Series[0].Points[i].ToolTip = string.Format("{0} DPS", singletarget.Result);
     }
 
     private void ststart_Click(object sender, EventArgs e)

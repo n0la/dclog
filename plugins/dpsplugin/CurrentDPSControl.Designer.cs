@@ -42,9 +42,12 @@
       this.label1 = new System.Windows.Forms.Label();
       this.dpschart = new System.Windows.Forms.DataVisualization.Charting.Chart();
       this.help = new System.Windows.Forms.ToolTip(this.components);
+      this.label2 = new System.Windows.Forms.Label();
+      this.interval = new System.Windows.Forms.NumericUpDown();
       this.tableLayoutPanel1.SuspendLayout();
       this.groupBox1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.dpschart)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.interval)).BeginInit();
       this.SuspendLayout();
       // 
       // tableLayoutPanel1
@@ -58,13 +61,15 @@
       this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
       this.tableLayoutPanel1.Name = "tableLayoutPanel1";
       this.tableLayoutPanel1.RowCount = 2;
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 110F));
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 130F));
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
       this.tableLayoutPanel1.Size = new System.Drawing.Size(813, 458);
       this.tableLayoutPanel1.TabIndex = 5;
       // 
       // groupBox1
       // 
+      this.groupBox1.Controls.Add(this.interval);
+      this.groupBox1.Controls.Add(this.label2);
       this.groupBox1.Controls.Add(this.targethelp);
       this.groupBox1.Controls.Add(this.ststatus);
       this.groupBox1.Controls.Add(this.ststop);
@@ -72,10 +77,10 @@
       this.groupBox1.Controls.Add(this.sttarget);
       this.groupBox1.Controls.Add(this.label1);
       this.groupBox1.Location = new System.Drawing.Point(3, 3);
-      this.groupBox1.MaximumSize = new System.Drawing.Size(324, 100);
+      this.groupBox1.MaximumSize = new System.Drawing.Size(324, 130);
       this.groupBox1.MinimumSize = new System.Drawing.Size(324, 100);
       this.groupBox1.Name = "groupBox1";
-      this.groupBox1.Size = new System.Drawing.Size(324, 100);
+      this.groupBox1.Size = new System.Drawing.Size(324, 124);
       this.groupBox1.TabIndex = 3;
       this.groupBox1.TabStop = false;
       this.groupBox1.Text = "Target";
@@ -96,7 +101,7 @@
       // 
       this.ststatus.AutoSize = true;
       this.ststatus.ForeColor = System.Drawing.Color.Red;
-      this.ststatus.Location = new System.Drawing.Point(207, 71);
+      this.ststatus.Location = new System.Drawing.Point(241, 93);
       this.ststatus.Name = "ststatus";
       this.ststatus.Size = new System.Drawing.Size(56, 13);
       this.ststatus.TabIndex = 4;
@@ -104,7 +109,7 @@
       // 
       // ststop
       // 
-      this.ststop.Location = new System.Drawing.Point(91, 71);
+      this.ststop.Location = new System.Drawing.Point(91, 88);
       this.ststop.Name = "ststop";
       this.ststop.Size = new System.Drawing.Size(75, 23);
       this.ststop.TabIndex = 3;
@@ -114,7 +119,7 @@
       // 
       // ststart
       // 
-      this.ststart.Location = new System.Drawing.Point(10, 71);
+      this.ststart.Location = new System.Drawing.Point(10, 88);
       this.ststart.Name = "ststart";
       this.ststart.Size = new System.Drawing.Size(75, 23);
       this.ststart.TabIndex = 2;
@@ -172,14 +177,14 @@
       this.dpschart.Dock = System.Windows.Forms.DockStyle.Fill;
       legend2.Name = "Legend1";
       this.dpschart.Legends.Add(legend2);
-      this.dpschart.Location = new System.Drawing.Point(3, 113);
+      this.dpschart.Location = new System.Drawing.Point(3, 133);
       this.dpschart.Name = "dpschart";
       series2.ChartArea = "ChartArea1";
       series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
       series2.Legend = "Legend1";
       series2.Name = "DPS";
       this.dpschart.Series.Add(series2);
-      this.dpschart.Size = new System.Drawing.Size(807, 342);
+      this.dpschart.Size = new System.Drawing.Size(807, 322);
       this.dpschart.TabIndex = 4;
       this.dpschart.Text = "Single Target DPS";
       // 
@@ -187,6 +192,27 @@
       // 
       this.help.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
       this.help.ToolTipTitle = "Help";
+      // 
+      // label2
+      // 
+      this.label2.AutoSize = true;
+      this.label2.Location = new System.Drawing.Point(10, 55);
+      this.label2.Name = "label2";
+      this.label2.Size = new System.Drawing.Size(94, 13);
+      this.label2.TabIndex = 6;
+      this.label2.Text = "Interval (seconds):";
+      // 
+      // interval
+      // 
+      this.interval.Location = new System.Drawing.Point(141, 55);
+      this.interval.Name = "interval";
+      this.interval.Size = new System.Drawing.Size(156, 20);
+      this.interval.TabIndex = 7;
+      this.interval.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
       // 
       // CurrentDPSControl
       // 
@@ -199,6 +225,7 @@
       this.groupBox1.ResumeLayout(false);
       this.groupBox1.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.dpschart)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.interval)).EndInit();
       this.ResumeLayout(false);
 
     }
@@ -215,5 +242,7 @@
     private System.Windows.Forms.Label label1;
     private System.Windows.Forms.DataVisualization.Charting.Chart dpschart;
     private System.Windows.Forms.ToolTip help;
+    private System.Windows.Forms.NumericUpDown interval;
+    private System.Windows.Forms.Label label2;
   }
 }

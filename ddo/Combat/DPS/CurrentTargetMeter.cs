@@ -24,7 +24,7 @@ namespace LibDDO.Combat.DPS
     {
       if (State == MeterState.Running)
       { 
-        ++passed;
+        passed += Interval;
         Helper.RaiseEventOnUIThread(Ticked, new object[] { this, damagedone });
         // Reset damage done every tick.
         damagedone = 0;
@@ -70,7 +70,7 @@ namespace LibDDO.Combat.DPS
     {
       get
       {
-        return (double)damagedone;
+        return (double)(damagedone / Interval);
       }
     }
   }

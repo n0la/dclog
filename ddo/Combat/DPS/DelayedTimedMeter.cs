@@ -45,6 +45,7 @@ namespace LibDDO.Combat.DPS
     public event DPSMeterTickedDelegate Ticked;
     public event DPSMeterStateChangedDelegate StateChanged;
 
+    protected uint interval = 1;
     protected Timer timer = new Timer();
     protected MeterState state = MeterState.Stopped;
     protected uint passed = 0;
@@ -62,15 +63,28 @@ namespace LibDDO.Combat.DPS
     public DelayedTimedMeter()
     {
       timer.Elapsed += new ElapsedEventHandler(timer_Elapsed);
-      timer.Interval = 1000.0;
+      timer.Interval = interval * 1000.0;
     }
 
     protected virtual void timer_Elapsed(object sender, ElapsedEventArgs e)
     {
       if (state == MeterState.Running)
       {
-        ++passed;
+        passed += interval;
         Helper.RaiseEventOnUIThread(Ticked, new object[] { this });
+      }
+    }
+
+    /// <summary>
+    /// The interval the DPS is calculate. Default is one second.
+    /// </summary>
+    public uint Interval
+    {
+      get { return interval; }
+      set
+      {
+        interval = value;
+        timer.Interval = value * 1000.0;
       }
     }
 
@@ -102,6 +116,9 @@ namespace LibDDO.Combat.DPS
       State = MeterState.Stopped;
     }
 
+    /// <summary>
+    /// Number of seconds passed since the start to now.
+    /// </summary>
     public uint SecondsPassed
     {
       get { return passed; }

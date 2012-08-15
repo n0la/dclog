@@ -50,7 +50,8 @@ namespace DCLog.DPSPlugin
     void meter_Ticked(CurrentTargetMeter meter, uint result)
     {
       // Add a point.
-      dpschart.Series[0].Points.AddXY(meter.TimePassed.TotalSeconds, result);
+      int i = dpschart.Series[0].Points.AddXY(meter.TimePassed.TotalSeconds, result);
+      dpschart.Series[0].Points[i].ToolTip = string.Format("{0} DPS", result);
     }
 
     void meter_StateChanged(DelayedTimedMeter meter, MeterState ny)
@@ -72,6 +73,7 @@ namespace DCLog.DPSPlugin
         target = sttarget.Text;
       }
 
+      meter.Interval = Decimal.ToUInt32(interval.Value);
       meter.Stop();
       meter.Target = target;
       meter.Start();
