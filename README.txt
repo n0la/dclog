@@ -14,6 +14,9 @@
  you agree that the consequences are yours to face. If you do not wish to break
  this EULA you probably shouldn't run or distribute this application. 
 
+ Download
+ 
+ You can find downloadable archives here: http://github.com/n0la/dclog/downloads
  
  How to get it running:
 
