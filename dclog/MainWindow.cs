@@ -130,11 +130,18 @@ namespace dclog
 
     private void MainWindow_Load(object sender, EventArgs e)
     {
-      // Apply black list from configuration.
-      plugins.BlackList = Configuration.Instance.PluginBlackList;
-      plugins.Load();
-      plugins.Initialise(DDO.Instance);
-      InitialisePlugins();
+      try
+      {
+        // Apply black list from configuration.
+        plugins.BlackList = Configuration.Instance.PluginBlackList;
+        plugins.Load();
+        plugins.Initialise(DDO.Instance);
+        InitialisePlugins();
+      }
+      catch (Exception ex)
+      {
+        mainlogger.Error(ex.ToString());
+      }
     }
 
     private void InitialisePlugins()

@@ -128,56 +128,50 @@ namespace DCLog.Plugins
     public void Load()
     {
       Unload();
-      try
+      foreach (string p in pluginpaths)
       {
-        foreach (string p in pluginpaths)
+        List<string> files = new List<string>(Directory.EnumerateFiles(p, "*.dll"));
+        if (files.Count > 0)
         {
-          List<string> files = new List<string>(Directory.EnumerateFiles(p, "*.dll"));
-          if (files.Count > 0)
+          foreach (string f in files)
           {
-            foreach (string f in files)
+            Assembly assembly = Assembly.LoadFile(f);
+            if (assembly != null)
             {
-              Assembly assembly = Assembly.LoadFile(f);
-              if (assembly != null)
-              {
-                Helper.RaiseEventOnUIThread(AssemblyLoaded, new object[] { this, assembly });
+              Helper.RaiseEventOnUIThread(AssemblyLoaded, new object[] { this, assembly });
                 
-                int count = 0;
-                Type[] types = assembly.GetTypes();
-                foreach (Type t in types)
+              int count = 0;
+              Type[] types = assembly.GetTypes();
+              foreach (Type t in types)
+              {
+                if (t.GetInterface("IPlugin") != null)
                 {
-                  if (t.GetInterface("IPlugin") != null)
-                  {
-                    IPlugin plugin = Activator.CreateInstance(t) as IPlugin;
-                    if (!plugin.IsCompatible(version))
-                    { // Not compatible
-                      Helper.RaiseEventOnUIThread(PluginIncompatible, new object[] { this, plugin });
-                    }
-                    else
-                    {
-                      if (!blacklist.Contains(plugin.Name))
-                      {
-                        Helper.RaiseEventOnUIThread(PluginLoaded, new object[] { this, plugin });
-                        loadedplugins.Add(plugin);
-                      }
-                    }
-                    availableplugins.Add(plugin);
-                    ++count;
+                  IPlugin plugin = Activator.CreateInstance(t) as IPlugin;
+                  if (!plugin.IsCompatible(version))
+                  { // Not compatible
+                    Helper.RaiseEventOnUIThread(PluginIncompatible, new object[] { this, plugin });
                   }
-                } // foreach
-
-                if (count > 0)
-                { // Plugins loaded, store it!
-                  assemblies.Add(assembly);
+                  else
+                  {
+                    if (!blacklist.Contains(plugin.Name))
+                    {
+                      Helper.RaiseEventOnUIThread(PluginLoaded, new object[] { this, plugin });
+                      loadedplugins.Add(plugin);
+                    }
+                  }
+                  availableplugins.Add(plugin);
+                  ++count;
                 }
+              } // foreach
+
+              if (count > 0)
+              { // Plugins loaded, store it!
+                assemblies.Add(assembly);
               }
-            } // foreach
-          }
-        } // foreach
-      }
-      catch (Exception)
-      {
-      }
+            }
+          } // foreach
+        }
+      } // foreach
     }
 
 
