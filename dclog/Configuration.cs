@@ -81,7 +81,7 @@ namespace dclog
     #region Initialise and save/load stuff
     private Configuration()
     {
-      configpath = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+      configpath = System.Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
       configpath = configpath + @"\dclog";
       if (!Directory.Exists(configpath)) 
       {
