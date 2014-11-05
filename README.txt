@@ -18,6 +18,13 @@
 
  You can find downloadable archives here: http://pub.n0la.org/dclog/
 
+ Windows 8 and Windows 8.1 Users:
+
+ All of the files are probably "blocked" and thus won't work. You might have to
+ right click files (especially all in plugins folder) and "unblock" them to get
+ the application to work. If it still doesn't work, also unblock all files in
+ the main folder.
+
  How to get it running:
 
  1. Disable UAC.
