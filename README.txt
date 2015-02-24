@@ -16,7 +16,7 @@
 
  Download
 
- You can find downloadable archives here: http://pub.n0la.org/dclog/
+ You can find downloadable archives here: http://pub.n0la.org/
 
  Windows 8 and Windows 8.1 Users:
 
